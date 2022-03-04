@@ -9,7 +9,7 @@ class ShopController extends Controller
 {
     public function index()
     {
-        $items = Item::all();
-        return view('frontend.shop', ['items' => $items]);
+        $items = Item::select('name', 'price', 'detail', 'image')->get();
+        return view('frontend.shop', compact('items'));
     }
 }
