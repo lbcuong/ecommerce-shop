@@ -18,3 +18,7 @@ use App\Http\Controllers\ShopController;
 Route::get('/', [ItemController::class, 'index']);
 
 Route::get('/shop', [ShopController::class, 'index']);
+
+// Admin
+Route::get('/dashboard/data/item-management', [ItemController::class, 'index'])->name('item-management');
+Route::get('/dashboard/data/item-insert', [ItemController::class, 'insert'])->name('item-insert');

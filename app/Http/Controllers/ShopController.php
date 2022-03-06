@@ -10,6 +10,6 @@ class ShopController extends Controller
     public function index()
     {
         $items = Item::select('name', 'price', 'detail', 'image')->get();
-        return view('frontend.shop', compact('items'));
+        return view('frontend.customer.shop', compact('items'));
     }
 }
