@@ -11,9 +11,7 @@
                         <h2 class="content-header-title float-left mb-0">Items</h2>
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a>
-                                </li>
-                                <li class="breadcrumb-item active">Items
+                                <li class="breadcrumb-item active"><a href="index.html">Items</a>
                                 </li>
                             </ol>
                         </div>
@@ -37,7 +35,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div>
-                                    <a class="btn btn-block btn-primary text-white" href="{{url('/dashboard/data/item-insert')}}">New Item</a>
+                                    <a class="btn btn-block btn-primary text-white" href="{{ route('item.insert')}}">New Item</a>
                                 </div>
                             </div>
                             <div class="card-content">
@@ -49,8 +47,8 @@
                                                     <th>Name</th>
                                                     <th>Image</th>
                                                     <th>Category</th>
-                                                    <th>Group</th>
                                                     <th>Price (đ)</th>
+                                                    <th>Quantity</th>
                                                     <th>Detail</th>
                                                     <th></th>
                                                     <th></th>
@@ -61,17 +59,17 @@
                                                 <tr>
                                                     <td>{{ $item->name }}</td>
                                                     <td>
-                                                        <img class="img-fluid" src="{{ asset('app-assets/images/pages/eCommerce/' .$item->image) }}" alt="img-placeholder">
+                                                        <img class="img-fluid" src="{{ asset($item->image) }}" alt="$item->image">
                                                     </td>
                                                     <td>{{ $item->category->name }}</td>
-                                                    <td>{{ $item->group->name }}</td>
                                                     <td>{{number_format($item->price, 0, ',', ',')}}</td>
+                                                    <td>{{ $item->quantity }}</td>
                                                     <td>{{ $item->detail }}</td>
                                                     <td>
-                                                        <a class='managing text-decoration-none' href="{{ url('/update-item-page/' . $item->id) }}"><i class='feather icon-edit'></i></a>
+                                                        <a class='managing text-decoration-none' href="{{ route('item.edit', ['id' => $item->id]) }}"><i class='feather icon-edit'></i></a>
                                                     </td>
                                                     <td>
-                                                        <a class='managing text-decoration-none' onclick="return confirm('Are you sure to delete {{$item->name}} item?')" href="{{ url('/delete-item/' . $item->id) }}"><i class='feather icon-trash'></i></a>
+                                                        <a class='managing text-decoration-none' onclick="return confirm('Are you sure to delete {{$item->name}} item?')" href="{{ route('item.destroy', ['id' => $item->id]) }}"><i class='feather icon-trash'></i></a>
                                                     </td>
                                                 </tr>
                                                 @endforeach

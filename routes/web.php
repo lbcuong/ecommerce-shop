@@ -20,5 +20,12 @@ Route::get('/', [ItemController::class, 'index']);
 Route::get('/shop', [ShopController::class, 'index']);
 
 // Admin
-Route::get('/dashboard/data/item-management', [ItemController::class, 'index'])->name('item-management');
-Route::get('/dashboard/data/item-insert', [ItemController::class, 'insert'])->name('item-insert');
+Route::get('/dashboard/data/item', [ItemController::class, 'index'])->name('item');
+
+Route::get('/dashboard/data/item/insert', [ItemController::class, 'insert'])->name('item.insert');
+Route::post('/dashboard/data/item/store', [ItemController::class, 'store'])->name('item.store');
+
+Route::get('/dashboard/data/item/destroy/{id}', [ItemController::class, 'destroy'])->name('item.destroy');
+
+Route::get('/dashboard/data/item/edit/{id}', [ItemController::class, 'edit'])->name('item.edit');
+Route::post('/dashboard/data/item/update', [ItemController::class, 'update'])->name('item.update');

@@ -8,12 +8,12 @@
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-left mb-0">Insert Item</h2>
+                        <h2 class="content-header-title float-left mb-0">Update Item</h2>
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('item')}}">Item</a>
                                 </li>
-                                <li class="breadcrumb-item active">Insert
+                                <li class="breadcrumb-item active">Update
                                 </li>
                             </ol>
                         </div>
@@ -29,14 +29,15 @@
                         <div class="card-body">
                             <div class="tab-content">
                                 <div class="tab-pane active" id="account" aria-labelledby="account-tab" role="tabpanel">
-                                    <form action="{{ route('item.store')}}" method="post" enctype="multipart/form-data">
+                                    <form action="{{ route('item.update')}}" method="post" enctype="multipart/form-data">
                                         @csrf
+                                        <input name="id" value="{{ $item->id }}" type="hidden">
                                         <div class="row">
                                             <div class="col-12 col-sm-6">
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label>Name</label>
-                                                        <input type="text" class="form-control" placeholder="Name" name="name">
+                                                        <input type="text" class="form-control" placeholder="Name" name="name" value="{{$item->name}}">
                                                         <span class="text-danger">@error('name'){{$message}}@enderror</span>
                                                     </div>
                                                 </div>
@@ -46,9 +47,9 @@
                                                         <select class="form-control" name="category_id">
                                                             @foreach ($categories as $category)
                                                             <option disabled>-------- {{$category->name}} ---------</option>
-                                                                @foreach ($category->children as $child)
-                                                                <option value="{{$child->id}}"> {{$child->name}} </option>
-                                                                @endforeach
+                                                            @foreach ($category->children as $child)
+                                                            <option value="{{$child->id}}" {{$item->category_id == $child->id ? 'selected' : ''}}> {{$child->name}} </option>
+                                                            @endforeach
                                                             @endforeach
                                                         </select>
                                                         <span class="text-danger">@error('category_id'){{$message}}@enderror</span>
@@ -57,7 +58,7 @@
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label>Quantity</label>
-                                                        <input type="text" class="form-control" placeholder="Quantity" name="quantity">
+                                                        <input type="text" class="form-control" placeholder="Quantity" name="quantity" value="{{$item->quantity}}">
                                                         <span class="text-danger">@error('quantity'){{$message}}@enderror</span>
                                                     </div>
                                                 </div>
@@ -66,22 +67,24 @@
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label>Price</label>
-                                                        <input type="text" class="form-control" placeholder="Price" name="price">
+                                                        <input type="text" class="form-control" placeholder="Price" name="price" value="{{$item->price}}">
                                                         <span class="text-danger">@error('price'){{$message}}@enderror</span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label>Detail</label>
-                                                        <textarea type="text" class="form-control" placeholder="Detail" name="detail"></textarea>
+                                                        <textarea type="text" class="form-control" placeholder="Detail" name="detail" value="{{$item->detail}}"> {{$item->detail}} </textarea>
                                                         <span class="text-danger">@error('detail'){{$message}}@enderror</span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label>Image</label>
-                                                        <input type="file" class="form-control" placeholder="Image" name="image">
+                                                        <input type="file" class="form-control" placeholder="Image" name="image" value="{{$item->image}}">
+                                                        <img class="my-2" src="{{ asset($item->image) }}" alt="Image">
                                                         <span class="text-danger">@error('image'){{$message}}@enderror</span>
+                                                        <div class="dz-message">Drop Files Here To Upload</div>
                                                     </div>
                                                 </div>
                                             </div>
