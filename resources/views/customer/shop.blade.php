@@ -75,10 +75,12 @@
                     <div class="row mt-1">
                         <div class="col-sm-12">
                             <fieldset class="form-group position-relative">
-                                <input type="text" class="form-control search-product" id="iconLeft5" placeholder="Search here">
-                                <div class="form-control-position">
-                                    <i class="feather icon-search"></i>
-                                </div>
+                                <form action="{{ route('shop') }}" method="GET">
+                                    <input type="text" class="form-control" name="filter" value="{{ request()->input('filter') }}" placeholder="Search here">
+                                    <div class="form-control-position">
+                                        <i class="feather icon-search"></i>
+                                    </div>
+                                </form>
                             </fieldset>
                         </div>
                     </div>
@@ -91,8 +93,8 @@
                     <div class="card ecommerce-card">
                         <div class="card-content">
                             <div class="item-img text-center">
-                                <a href="app-ecommerce-details.html">
-                                    <img class="img-fluid" src="app-assets/images/pages/eCommerce/{{ $item->image }}" alt="img-placeholder"></a>
+                                <a href="{{ route('shop.detail', ['id' => $item->id]) }}">
+                                    <img class="img-fluid" src="{{ asset($item->image) }}" alt="img-placeholder"></a>
                             </div>
                             <div class="card-body">
                                 <div class="item-wrapper">
@@ -108,7 +110,7 @@
                                     </div>
                                 </div>
                                 <div class="item-name">
-                                    <a href="app-ecommerce-details.html">{{ $item->name }}</a>
+                                    <a href="{{ route('shop.detail', ['id' => $item->id]) }}">{{ $item->name }}</a>
                                     <p class="item-company">By <span class="company-name">Google</span></p>
                                 </div>
                                 <div>
@@ -149,15 +151,7 @@
                         <div class="col-sm-12">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-center mt-2">
-                                    <li class="page-item prev-item"><a class="page-link" href="#"></a></li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item" aria-current="page"><a class="page-link" href="#">4</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">6</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">7</a></li>
-                                    <li class="page-item next-item"><a class="page-link" href="#"></a></li>
+                                    {{ $items->appends(request()->input())->links('pagination::bootstrap-4') }}
                                 </ul>
                             </nav>
                         </div>
@@ -263,6 +257,7 @@
                                     <h6 class="filter-title mb-1">Categories</h6>
                                 </div>
                                 <ul class="list-unstyled categories-list">
+                                    @foreach ($categories as $category)
                                     <li>
                                         <span class="vs-radio-con vs-radio-primary py-25">
                                             <input type="radio" name="category-filter" value="false" checked>
@@ -270,101 +265,10 @@
                                                 <span class="vs-radio--border"></span>
                                                 <span class="vs-radio--circle"></span>
                                             </span>
-                                            <span class="ml-50">Appliances</span>
+                                            <span class="ml-50">{{ $category->name }}</span>
                                         </span>
                                     </li>
-                                    <li>
-                                        <span class="vs-radio-con vs-radio-primary py-25">
-                                            <input type="radio" name="category-filter" value="false">
-                                            <span class="vs-radio">
-                                                <span class="vs-radio--border"></span>
-                                                <span class="vs-radio--circle"></span>
-                                            </span>
-                                            <span class="ml-50"> Audio</span>
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span class="vs-radio-con vs-radio-primary py-25">
-                                            <input type="radio" name="category-filter" value="false">
-                                            <span class="vs-radio">
-                                                <span class="vs-radio--border"></span>
-                                                <span class="vs-radio--circle"></span>
-                                            </span>
-                                            <span class="ml-50">Cameras & Camcorders</span>
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span class="vs-radio-con vs-radio-primary py-25">
-                                            <input type="radio" name="category-filter" value="false">
-                                            <span class="vs-radio">
-                                                <span class="vs-radio--border"></span>
-                                                <span class="vs-radio--circle"></span>
-                                            </span>
-                                            <span class="ml-50">Car Electronics & GPS</span>
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span class="vs-radio-con vs-radio-primary py-25">
-                                            <input type="radio" name="category-filter" value="false">
-                                            <span class="vs-radio">
-                                                <span class="vs-radio--border"></span>
-                                                <span class="vs-radio--circle"></span>
-                                            </span>
-                                            <span class="ml-50">Cell Phones</span>
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span class="vs-radio-con vs-radio-primary py-25">
-                                            <input type="radio" name="category-filter" value="false">
-                                            <span class="vs-radio">
-                                                <span class="vs-radio--border"></span>
-                                                <span class="vs-radio--circle"></span>
-                                            </span>
-                                            <span class="ml-50">Computers & Tablets</span>
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span class="vs-radio-con vs-radio-primary py-25">
-                                            <input type="radio" name="category-filter" value="false">
-                                            <span class="vs-radio">
-                                                <span class="vs-radio--border"></span>
-                                                <span class="vs-radio--circle"></span>
-                                            </span>
-                                            <span class="ml-50"> Health, Fitness & Beauty</span>
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span class="vs-radio-con vs-radio-primary py-25">
-                                            <input type="radio" name="category-filter" value="false">
-                                            <span class="vs-radio">
-                                                <span class="vs-radio--border"></span>
-                                                <span class="vs-radio--circle"></span>
-                                            </span>
-                                            <span class="ml-50">Office & School Supplies</span>
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span class="vs-radio-con vs-radio-primary py-25">
-                                            <input type="radio" name="category-filter" value="false">
-                                            <span class="vs-radio">
-                                                <span class="vs-radio--border"></span>
-                                                <span class="vs-radio--circle"></span>
-                                            </span>
-                                            <span class="ml-50">TV & Home Theater</span>
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <span class="vs-radio-con vs-radio-primary py-25">
-                                            <input type="radio" name="category-filter" value="false">
-                                            <span class="vs-radio">
-                                                <span class="vs-radio--border"></span>
-                                                <span class="vs-radio--circle"></span>
-                                            </span>
-                                            <span class="ml-50">Video Games
-                                            </span>
-                                        </span>
-                                    </li>
-
+                                    @endforeach
                                 </ul>
                             </div>
                             <!-- Categories Ends -->
@@ -376,6 +280,7 @@
                                 </div>
                                 <div class="brand-list" id="brands">
                                     <ul class="list-unstyled">
+                                        @foreach ($brands as $brand)
                                         <li class="d-flex justify-content-between align-items-center py-25">
                                             <span class="vs-checkbox-con vs-checkbox-primary">
                                                 <input type="checkbox" value="false">
@@ -384,122 +289,11 @@
                                                         <i class="vs-icon feather icon-check"></i>
                                                     </span>
                                                 </span>
-                                                <span class="">Insignia™</span>
+                                                <span class="">{{ $brand->name }}</span>
                                             </span>
-                                            <span>746</span>
+                                            <span>{{ $brand->items_count }}</span>
                                         </li>
-                                        <li class="d-flex justify-content-between align-items-center py-25">
-                                            <span class="vs-checkbox-con vs-checkbox-primary">
-                                                <input type="checkbox" value="false">
-                                                <span class="vs-checkbox">
-                                                    <span class="vs-checkbox--check">
-                                                        <i class="vs-icon feather icon-check"></i>
-                                                    </span>
-                                                </span>
-                                                <span class="">
-                                                    Samsung
-                                                </span>
-                                            </span>
-                                            <span>633</span>
-                                        </li>
-                                        <li class="d-flex justify-content-between align-items-center py-25">
-                                            <span class="vs-checkbox-con vs-checkbox-primary">
-                                                <input type="checkbox" value="false">
-                                                <span class="vs-checkbox">
-                                                    <span class="vs-checkbox--check">
-                                                        <i class="vs-icon feather icon-check"></i>
-                                                    </span>
-                                                </span>
-                                                <span class="">
-                                                    Metra
-                                                </span>
-                                            </span>
-                                            <span>591</span>
-                                        </li>
-                                        <li class="d-flex justify-content-between align-items-center py-25">
-                                            <span class="vs-checkbox-con vs-checkbox-primary">
-                                                <input type="checkbox" value="false">
-                                                <span class="vs-checkbox">
-                                                    <span class="vs-checkbox--check">
-                                                        <i class="vs-icon feather icon-check"></i>
-                                                    </span>
-                                                </span>
-                                                <span class="">HP</span>
-                                            </span>
-                                            <span>530</span>
-                                        </li>
-                                        <li class="d-flex justify-content-between align-items-center py-25">
-                                            <span class="vs-checkbox-con vs-checkbox-primary">
-                                                <input type="checkbox" value="false">
-                                                <span class="vs-checkbox">
-                                                    <span class="vs-checkbox--check">
-                                                        <i class="vs-icon feather icon-check"></i>
-                                                    </span>
-                                                </span>
-                                                <span class="">Apple</span>
-                                            </span>
-                                            <span>442</span>
-                                        </li>
-                                        <li class="d-flex justify-content-between align-items-center py-25">
-                                            <span class="vs-checkbox-con vs-checkbox-primary">
-                                                <input type="checkbox" value="false">
-                                                <span class="vs-checkbox">
-                                                    <span class="vs-checkbox--check">
-                                                        <i class="vs-icon feather icon-check"></i>
-                                                    </span>
-                                                </span>
-                                                <span class="">GE</span>
-                                            </span>
-                                            <span>394</span>
-                                        </li>
-                                        <li class="d-flex justify-content-between align-items-center py-25">
-                                            <span class="vs-checkbox-con vs-checkbox-primary">
-                                                <input type="checkbox" value="false">
-                                                <span class="vs-checkbox">
-                                                    <span class="vs-checkbox--check">
-                                                        <i class="vs-icon feather icon-check"></i>
-                                                    </span>
-                                                </span>
-                                                <span class="">Sony</span>
-                                            </span>
-                                            <span>350</span>
-                                        </li>
-                                        <li class="d-flex justify-content-between align-items-center py-25">
-                                            <span class="vs-checkbox-con vs-checkbox-primary">
-                                                <input type="checkbox" value="false">
-                                                <span class="vs-checkbox">
-                                                    <span class="vs-checkbox--check">
-                                                        <i class="vs-icon feather icon-check"></i>
-                                                    </span>
-                                                </span>
-                                                <span class="">Incipio</span>
-                                            </span>
-                                            <span>320</span>
-                                        </li>
-                                        <li class="d-flex justify-content-between align-items-center py-25">
-                                            <span class="vs-checkbox-con vs-checkbox-primary">
-                                                <input type="checkbox" value="false">
-                                                <span class="vs-checkbox">
-                                                    <span class="vs-checkbox--check">
-                                                        <i class="vs-icon feather icon-check"></i>
-                                                    </span>
-                                                </span>
-                                                <span class="">KitchenAid</span>
-                                            </span>
-                                            <span>318</span>
-                                        </li>
-                                        <li class="d-flex justify-content-between align-items-center py-25">
-                                            <span class="vs-checkbox-con vs-checkbox-primary">
-                                                <input type="checkbox" value="false">
-                                                <span class="vs-checkbox">
-                                                    <span class="vs-checkbox--check">
-                                                        <i class="vs-icon feather icon-check"></i>
-                                                    </span>
-                                                </span>
-                                                <span class="">Whirlpool</span>
-                                            </span>
-                                            <span>298</span>
-                                        </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>

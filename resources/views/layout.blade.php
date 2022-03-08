@@ -20,6 +20,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/ui/prism.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/select/select2.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/file-uploaders/dropzone.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/spinner/jquery.bootstrap-touchspin.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/swiper.min.css') }}">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -36,6 +38,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/extensions/noui-slider.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/app-ecommerce-shop.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/file-uploaders/dropzone.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/app-ecommerce-details.css') }}">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -272,7 +275,7 @@
                 </li>
                 <li class=" nav-item"><a href="#"><i class="feather icon-shopping-cart"></i><span class="menu-title" data-i18n="Ecommerce">Ecommerce</span></a>
                     <ul class="menu-content">
-                        <li class="active"><a href="app-ecommerce-shop.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Shop">Shop</span></a>
+                        <li class="active"><a href="{{ route('shop')}}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Shop">Shop</span></a>
                         </li>
                         <li><a href="app-ecommerce-details.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Details">Details</span></a>
                         </li>
@@ -328,6 +331,8 @@
     <script src="{{ asset('app-assets/vendors/js/extensions/nouislider.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/dropzone.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/extensions/swiper.min.js') }}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -339,6 +344,8 @@
     <!-- BEGIN: Page JS-->
     <script src="{{ asset('app-assets/js/scripts/pages/app-ecommerce-shop.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/extensions/dropzone.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/pages/app-ecommerce-details.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/forms/number-input.js') }}"></script>
     <!-- END: Page JS-->
 
 </body>

@@ -82,9 +82,8 @@
                                                     <div class="controls">
                                                         <label>Image</label>
                                                         <input type="file" class="form-control" placeholder="Image" name="image" value="{{$item->image}}">
-                                                        <img class="my-2" src="{{ asset($item->image) }}" alt="Image">
+                                                        <img class="img-fluid my-2" src="{{ asset($item->image) }}" alt="$item->image" width="200">
                                                         <span class="text-danger">@error('image'){{$message}}@enderror</span>
-                                                        <div class="dz-message">Drop Files Here To Upload</div>
                                                     </div>
                                                 </div>
                                             </div>

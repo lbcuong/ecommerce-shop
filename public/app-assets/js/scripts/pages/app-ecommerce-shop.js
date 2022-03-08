@@ -175,14 +175,6 @@ $(document).ready(function () {
   $(".remove-wishlist , .move-cart").on("click", function () {
     $(this).closest(".ecommerce-card").remove();
   })
-
-  // search items
-  $(".search-product").on("keyup", function() {		//search player
-	  var value = $(this).val().toLowerCase();
-	  $(".ecommerce-card").filter(function() {
-		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-	  });
-	});
 })
 
 // on window resize hide sidebar

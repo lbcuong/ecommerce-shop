@@ -17,7 +17,8 @@ use App\Http\Controllers\ShopController;
 
 Route::get('/', [ItemController::class, 'index']);
 
-Route::get('/shop', [ShopController::class, 'index']);
+Route::get('/shop', [ShopController::class, 'index'])->name('shop');
+Route::get('/shop/detail/{id}', [ShopController::class, 'detail'])->name('shop.detail');
 
 // Admin
 Route::get('/dashboard/data/item', [ItemController::class, 'index'])->name('item');

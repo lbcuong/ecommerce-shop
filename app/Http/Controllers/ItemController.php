@@ -12,18 +12,18 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $items = Item::with(['category'])
+        $items = Item::with('category')
             ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
             ->get();
 
-        return view('frontend.admin.item.index', compact('items'));
+        return view('admin.item.index', compact('items'));
     }
 
     public function insert()
     {
         $categories = Category::with('children')->where('parent_id', '=', NULL)->select('id', 'name')->get();
 
-        return view('frontend.admin.item.insert', compact('categories'));
+        return view('admin.item.insert', compact('categories'));
     }
 
     public function store(ItemRequest $request)
@@ -49,7 +49,7 @@ class ItemController extends Controller
         $item = Item::find($id);
         $categories = Category::with('children')->where('parent_id', '=', NULL)->select('id', 'name')->get();
 
-        return view('frontend.admin.item.edit', compact('item', 'categories'));
+        return view('admin.item.edit', compact('item', 'categories'));
     }
 
     public function update(ItemRequest $request)
@@ -65,7 +65,7 @@ class ItemController extends Controller
             $params['image'] = $image->move('app-assets/images/pages/eCommerce/', $image->getClientOriginalName());
         }
         else {
-            $params['image'] = $item->select('image')->get();
+            $params['image'] = Item::where('id', $request->id)->get('name');
         }
         $item->update($params);
 
