@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Item;
-use App\Models\Category;
 
 class HomeController extends Controller
 {
@@ -23,25 +21,8 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Request $request)
+    public function index()
     {
-        $filter = $request->input('filter');
-
-        if (!empty($filter)) {
-        $items = Item::with('category')
-            ->where('name', 'like', '%'.$filter.'%')
-            ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
-            ->paginate(5);
-        }
-        else {
-            $items = Item::with('category')
-            ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
-            ->paginate(5); 
-        }
-
-        $brands = Category::with('items')->withCount('items')->where('parent_id', '!=', NULL)->get();
-        $categories = Category::where('parent_id', '=', NULL)->select('name')->get();
-
-        return view('customer.shop', compact('items', 'brands', 'categories'));
+        return view('home');
     }
 }
