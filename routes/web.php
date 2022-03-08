@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +32,7 @@ Route::get('/dashboard/data/item/destroy/{id}', [ItemController::class, 'destroy
 
 Route::get('/dashboard/data/item/edit/{id}', [ItemController::class, 'edit'])->name('item.edit');
 Route::post('/dashboard/data/item/update', [ItemController::class, 'update'])->name('item.update');
+
+Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
