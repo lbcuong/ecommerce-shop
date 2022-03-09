@@ -17,8 +17,6 @@ class Items extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id');
             $table->foreign("category_id")->references('id')->on('categories');
-            $table->unsignedBigInteger('group_id');
-            $table->foreign("group_id")->references('id')->on('groups');
             $table->string('name');
             $table->string('price');
             $table->string('detail');

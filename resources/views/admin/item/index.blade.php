@@ -35,7 +35,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div>
-                                    <a class="btn btn-block btn-primary text-white" href="{{ route('item.insert')}}">New Item</a>
+                                    <a class="btn btn-block btn-primary text-white" href="{{ route('items.create')}}">New Item</a>
                                 </div>
                             </div>
                             <div class="card-content">
@@ -66,10 +66,16 @@
                                                     <td>{{ $item->quantity }}</td>
                                                     <td>{{ $item->detail }}</td>
                                                     <td>
-                                                        <a class='managing text-decoration-none' href="{{ route('item.edit', ['id' => $item->id]) }}"><i class='feather icon-edit'></i></a>
+                                                        <a class='managing text-decoration-none' href="{{ route('items.edit', $item->id) }}"><i class='feather icon-edit'></i></a>
                                                     </td>
                                                     <td>
-                                                        <a class='managing text-decoration-none' onclick="return confirm('Are you sure to delete {{$item->name}} item?')" href="{{ route('item.destroy', ['id' => $item->id]) }}"><i class='feather icon-trash'></i></a>
+                                                        <form action="{{ route('items.destroy', $item->id) }}" method="POST">
+                                                            @csrf
+
+                                                            @method('DELETE')
+
+                                                            <a class="managing text-decoration-none" onclick="return confirm('Are you sure to delete {{$item->name}} item?')"><i class='feather icon-trash'></i></a>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                                 @endforeach

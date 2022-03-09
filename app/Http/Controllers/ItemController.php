@@ -19,11 +19,11 @@ class ItemController extends Controller
         return view('admin.item.index', compact('items'));
     }
 
-    public function insert()
+    public function create()
     {
         $categories = Category::with('children')->where('parent_id', '=', NULL)->select('id', 'name')->get();
 
-        return view('admin.item.insert', compact('categories'));
+        return view('admin.item.create', compact('categories'));
     }
 
     public function store(ItemRequest $request)
@@ -33,7 +33,7 @@ class ItemController extends Controller
         $params['image'] = $image->move('app-assets/images/pages/eCommerce/', $image->getClientOriginalName());
         Item::create($params);
 
-        return redirect()->route('item');
+        return redirect()->route('items.index');
     }
 
     public function destroy($id)
@@ -41,7 +41,7 @@ class ItemController extends Controller
         $item = Item::find($id);
         $item->delete();
 
-        return redirect()->route('item')->with('message', 'Item ' . $item->id . ": " . $item->name . " has been deleted!");
+        return redirect()->route('items.index')->with('message', 'Item ' . $item->id . ": " . $item->name . " has been deleted!");
     }
 
     public function edit($id)
@@ -69,6 +69,6 @@ class ItemController extends Controller
         }
         $item->update($params);
 
-        return redirect()->route('item')->with('message', 'Item ' . $item->id . ": " . $item->name . " has been updated!");
+        return redirect()->route('items.index')->with('message', 'Item ' . $item->id . ": " . $item->name . " has been updated!");
     }
 }
