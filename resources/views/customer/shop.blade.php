@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.app')
 @section('content')
 <div class="app-content content">
     <div class="content-overlay"></div>
@@ -75,7 +75,7 @@
                     <div class="row mt-1">
                         <div class="col-sm-12">
                             <fieldset class="form-group position-relative">
-                                <form action="{{ route('shop') }}" method="GET">
+                                <form action="{{ route('/') }}" method="GET">
                                     <input type="text" class="form-control" name="filter" value="{{ request()->input('filter') }}" placeholder="Search here">
                                     <div class="form-control-position">
                                         <i class="feather icon-search"></i>
@@ -93,7 +93,7 @@
                     <div class="card ecommerce-card">
                         <div class="card-content">
                             <div class="item-img text-center">
-                                <a href="{{ route('shop.detail', ['id' => $item->id]) }}">
+                                <a href="{{ route('detail', ['id' => $item->id]) }}">
                                     <img class="img-fluid" src="{{ asset($item->image) }}" alt="img-placeholder"></a>
                             </div>
                             <div class="card-body">
@@ -110,7 +110,7 @@
                                     </div>
                                 </div>
                                 <div class="item-name">
-                                    <a href="{{ route('shop.detail', ['id' => $item->id]) }}">{{ $item->name }}</a>
+                                    <a href="{{ route('detail', ['id' => $item->id]) }}">{{ $item->name }}</a>
                                     <p class="item-company">By <span class="company-name">Google</span></p>
                                 </div>
                                 <div>

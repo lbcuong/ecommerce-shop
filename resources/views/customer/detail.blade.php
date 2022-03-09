@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.app')
 @section('content')
 <div class="app-content content">
     <div class="content-overlay"></div>
@@ -148,7 +148,7 @@
                             <div class="swiper-wrapper">
                                 @foreach ($relatedItems as $relatedItem)
                                 <div class="swiper-slide rounded swiper-shadow">
-                                    <a href="{{ route('shop.detail', ['id' => $relatedItem->id]) }}">
+                                    <a href="{{ route('detail', ['id' => $relatedItem->id]) }}">
                                         <div class="item-heading">
                                             <p class="text-truncate mb-0">
                                                 {{ $relatedItem->name }}

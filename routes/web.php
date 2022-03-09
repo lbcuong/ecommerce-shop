@@ -17,10 +17,8 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', [ItemController::class, 'index']);
-
-Route::get('/shop', [ShopController::class, 'index'])->name('shop');
-Route::get('/shop/detail/{id}', [ShopController::class, 'detail'])->name('shop.detail');
+Route::get('/', [ShopController::class, 'index'])->name('/');
+Route::get('/detail/{id}', [ShopController::class, 'detail'])->name('detail');
 
 // Admin
 Route::get('/dashboard/data/item', [ItemController::class, 'index'])->name('item');

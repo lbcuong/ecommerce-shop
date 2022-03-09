@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.dashboard')
 @section('content')
 <div class="app-content content">
     <div class="content-overlay"></div>
