@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ShopController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -41,9 +41,15 @@ Route::get('/', [ShopController::class, 'index'])->name('/');
 Route::get('/detail/{id}', [ShopController::class, 'detail'])->name('detail');
 
 Auth::routes();
-Route::group(['middleware' => ['role:customer']], function () {
 
+// Route::group(function () {
+//     Route::resource('/', ShopController::class);
+// });
+
+Route::group(['middleware' => ['role:customer']], function () {
+    Route::resource('carts', CartController::class);
 });
+
 Route::group(['middleware' => ['role:admin'], 'prefix' => 'dashboard'], function () {
     Route::resource('items', ItemController::class)->only([
         'index', 'create', 'update', 'destroy', 'edit', 'store'

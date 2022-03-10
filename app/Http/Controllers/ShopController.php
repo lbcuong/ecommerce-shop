@@ -28,7 +28,7 @@ class ShopController extends Controller
         $brands = Category::with('items')->withCount('items')->where('parent_id', '!=', NULL)->get();
         $categories = Category::where('parent_id', '=', NULL)->select('name')->get();
 
-        return view('customer.shop', compact('items', 'brands', 'categories'));
+        return view('shop.index', compact('items', 'brands', 'categories'));
     }
 
     public function detail($id)
@@ -38,6 +38,6 @@ class ShopController extends Controller
 
         $relatedItems = Item::where('category_id', $item->category_id)->select('id', 'name', 'category_id', 'price', 'image')->get();
 
-        return view('customer.detail', compact('item', 'relatedItems'));
+        return view('shop.detail', compact('item', 'relatedItems'));
     }
 }

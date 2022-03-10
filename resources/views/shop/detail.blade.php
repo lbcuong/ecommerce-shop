@@ -101,7 +101,12 @@
                                 <p>Available - <span class="text-success">{{ $item->quantity }} item(s)</span></p>
 
                                 <div class="d-flex flex-column flex-sm-row">
-                                    <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0"><i class="feather icon-shopping-cart mr-25"></i>ADD TO CART</button>
+                                    <form action="{{ route('carts.store') }}" method="POST">
+                                        @csrf
+                                        <input name="id" value="{{ $item->id }}" type="hidden">
+                                        <input name="quantity" value="1" type="hidden">
+                                        <button class="btn btn-primary mr-0 mr-sm-1 mb-1 mb-sm-0"><i class="feather icon-shopping-cart mr-25"></i>ADD TO CART</button>
+                                    </form>
                                     <button class="btn btn-outline-danger"><i class="feather icon-heart mr-25"></i>WISHLIST</button>
                                 </div>
                                 <hr>
