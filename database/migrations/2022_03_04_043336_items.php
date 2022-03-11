@@ -19,7 +19,9 @@ class Items extends Migration
             $table->foreign("category_id")->references('id')->on('categories');
             $table->string('name');
             $table->string('price');
-            $table->string('detail');
+            $table->integer('quantity');
+            $table->longText('detail');
+            $table->string('image');
             $table->timestamps();
         });
     }
@@ -31,6 +33,6 @@ class Items extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('items');
     }
 }

@@ -35,10 +35,20 @@ class PermissionAndRoleSeeder extends Seeder
         $role2->givePermissionTo('edit item');
         $role2->givePermissionTo('delete item');
 
-        $user = User::where('email', 'lecuong@email.com');
-        $user->assignRole('customer');
 
-        $user1 = User::where('email', 'odin@email.com');
-        $user1->assignRole('admin');
+        $user = User::create([
+            'name' => 'admin', 
+            'email' => 'admin@test.com',
+            'password' => bcrypt('password')
+        ]);
+
+        $user1 = User::create([
+            'name' => 'user', 
+            'email' => 'user@test.com',
+            'password' => bcrypt('password')
+        ]);
+
+        $user->assignRole('admin');
+        $user1->assignRole('customer');
     }
 }

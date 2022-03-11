@@ -15,6 +15,7 @@ class Categories extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('name');
             $table->timestamps();
         });
@@ -27,6 +28,6 @@ class Categories extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('categories');
     }
 }
