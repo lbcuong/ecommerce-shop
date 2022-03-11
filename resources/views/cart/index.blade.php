@@ -32,7 +32,8 @@
             </div>
         </div>
         <div class="content-body">
-            <form action="#" class="icons-tab-steps checkout-tab-steps wizard-circle">
+            <form action="{{ route('carts.checkout') }}" method="post" class="icons-tab-steps checkout-tab-steps wizard-circle">
+                @csrf
                 <!-- Checkout Place order starts -->
                 <h6><i class="step-icon step feather icon-shopping-cart"></i>Cart</h6>
                 <fieldset class="checkout-step-1 px-0">
@@ -56,7 +57,7 @@
                                         <div class="item-quantity">
                                             <p class="quantity-title">Quantity</p>
                                             <div class="input-group quantity-counter-wrapper">
-                                                <input type="text" class="quantity-counter" value="{{ $row->qty }}">
+                                                <input class="quantity-counter update-item" value="{{ $row->qty }}" name="quantity" data-id="{{ $row->rowId }}" readonly="readonly">
                                             </div>
                                         </div>
                                         <p class="delivery-date">Delivery by, Wed Apr 25</p>
@@ -78,15 +79,11 @@
                                                 </p>
                                             </div>
                                         </div>
-
-                                        <div class="">
-                                            <form action="{{ route('carts.destroy', $row->rowId) }}" method="POST">
-                                                @csrf
-                                                <a type="submit">
-                                                    <i class="feather icon-x align-middle"></i> Remove</a>
-                                            </form>
+                                        <div class="wishlist remove-wishlist">
+                                            <a type="submit" class="remove-item" data-id="{{ $row->rowId }}">
+                                                <i class="feather icon-x align-middle"></i> Remove
+                                            </a>
                                         </div>
-
                                         <div class="cart remove-wishlist">
                                             <i class="fa fa-heart-o mr-25"></i> Wishlist
                                         </div>
@@ -165,52 +162,25 @@
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="checkout-name">Full Name:</label>
-                                                <input type="text" id="checkout-name" class="form-control required" name="fname">
+                                                <input type="text" id="checkout-name" class="form-control required" name="name">
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="checkout-number">Mobile Number:</label>
-                                                <input type="number" id="checkout-number" class="form-control required" name="mnumber">
+                                                <input type="number" id="checkout-number" class="form-control required" name="phone_number">
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label for="checkout-apt-number">Flat, House No:</label>
-                                                <input type="number" id="checkout-apt-number" class="form-control required" name="apt-number">
+                                                <label for="checkout-email">Email</label>
+                                                <input type="text" id="checkout-email" class="form-control required" name="email">
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label for="checkout-landmark">Landmark e.g. near apollo hospital:</label>
-                                                <input type="text" id="checkout-landmark" class="form-control required" name="landmark">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="checkout-city">Town/City:</label>
-                                                <input type="text" id="checkout-city" class="form-control required" name="city">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="checkout-pincode">Pincode:</label>
-                                                <input type="number" id="checkout-pincode" class="form-control required" name="pincode">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="checkout-state">State:</label>
-                                                <input type="text" id="checkout-state" class="form-control required" name="state">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-12">
-                                            <div class="form-group">
-                                                <label for="add-type">Address Type:</label>
-                                                <select class="form-control" id="add-type">
-                                                    <option>Home</option>
-                                                    <option>Work</option>
-                                                </select>
+                                                <label for="checkout-address">Address</label>
+                                                <input type="number" id="checkout-address" class="form-control required" name="address">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 offset-md-6">
@@ -256,6 +226,7 @@
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
+                                        <!--
                                         <div class="d-flex justify-content-between flex-wrap">
                                             <div class="vs-radio-con vs-radio-primary">
                                                 <input type="radio" name="vueradio" checked="" value="false">
@@ -263,7 +234,7 @@
                                                     <span class="vs-radio--border"></span>
                                                     <span class="vs-radio--circle"></span>
                                                 </span>
-                                                <img src="../../../app-assets/images/pages/eCommerce/bank.png" alt="img-placeholder" height="40">
+                                                <img src="{{ asset('app-assets/images/pages/eCommerce/bank.png') }}" alt="img-placeholder" height="40">
                                                 <span>US Unlocked Debit Card 12XX XXXX XXXX 0000
                                                 </span>
                                             </div>
@@ -282,7 +253,9 @@
                                             </div>
                                         </div>
                                         <hr class="my-2">
+                                        -->
                                         <ul class="other-payment-options list-unstyled">
+                                            <!--
                                             <li>
                                                 <div class="vs-radio-con vs-radio-primary py-25">
                                                     <input type="radio" name="vueradio" value="false">
@@ -332,12 +305,19 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                        <hr>
-                                        <div class="gift-card">
-                                            <p><i class="feather icon-plus-square mr-25 font-medium-5"></i>
-                                                Add Gift Card
-                                            </p>
-                                        </div>
+                                            <div class="gift-card">
+                                                <p><i class="feather icon-plus-square mr-25 font-medium-5"></i>
+                                                    Add Gift Card
+                                                </p>
+                                            </div>
+                                            <hr>
+                                            -->
+                                            <div class="gift-card">
+                                                <p>
+                                                    Cash On Delivery
+                                                </p>
+                                                <input name="payment_method" value="Cash On Delivery" type="hidden"/>
+                                            </div>
                                     </div>
                                 </div>
                             </div>

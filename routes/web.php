@@ -47,6 +47,7 @@ Auth::routes();
 // });
 
 Route::group(['middleware' => ['role:customer']], function () {
+    Route::get('/carts/checkout', [ShopController::class, 'checkout'])->name('carts.checkout');
     Route::resource('carts', CartController::class);
 });
 

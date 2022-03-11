@@ -13,8 +13,8 @@
 
   // Default Spin
   $(".touchspin").TouchSpin({
-    buttondown_class: "btn btn-primary",
-    buttonup_class: "btn btn-primary",
+    buttondown_class: "",
+    buttonup_class: "",
   });
 
   // Icon Change

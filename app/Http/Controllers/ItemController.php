@@ -41,7 +41,7 @@ class ItemController extends Controller
         $item = Item::find($id);
         $item->delete();
 
-        return redirect()->route('items.index')->with('message', 'Item ' . $item->id . ": " . $item->name . " has been deleted!");
+        return redirect()->route('items.index');
     }
 
     public function edit($id)
@@ -69,6 +69,6 @@ class ItemController extends Controller
         }
         $item->update($params);
 
-        return redirect()->route('items.index')->with('message', 'Item ' . $item->id . ": " . $item->name . " has been updated!");
+        return redirect()->route('items.index');
     }
 }

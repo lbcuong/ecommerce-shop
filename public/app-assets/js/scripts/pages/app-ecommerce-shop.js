@@ -81,19 +81,19 @@ $(document).ready(function () {
   // For View in cart
   cart.on("click", function () {
     var $this = $(this),
-    addToCart = $this.find(".add-to-cart"),
-    viewInCart = $this.find(".view-in-cart");
-    if(addToCart.is(':visible')) {
+      addToCart = $this.find(".add-to-cart"),
+      viewInCart = $this.find(".view-in-cart");
+    if (addToCart.is(':visible')) {
       addToCart.addClass("d-none");
       viewInCart.addClass("d-inline-block");
     }
-    else{
-      var href= viewInCart.attr('href');
+    else {
+      var href = viewInCart.attr('href');
       window.location.href = href;
     }
   });
 
-  $(".view-in-cart").on('click', function(e){
+  $(".view-in-cart").on('click', function (e) {
     e.preventDefault();
   });
 
@@ -149,9 +149,10 @@ $(document).ready(function () {
   }
 
   // checkout quantity counter
+  // let qty = $(".quantity-counter").data("qty");
   var quantityCounter = $(".quantity-counter"),
     CounterMin = 1,
-    CounterMax = 10;
+    CounterMax = 7;
   if (quantityCounter.length > 0) {
     quantityCounter.TouchSpin({
       min: CounterMin,
@@ -172,10 +173,54 @@ $(document).ready(function () {
   }
 
   // remove items from wishlist page
-  $(".remove-wishlist , .move-cart").on("click", function () {
-    $(this).closest(".ecommerce-card").remove();
+  //$(".remove-wishlist , .move-cart").on("click", function () {
+  //  $(this).closest(".ecommerce-card").remove();
+
+  //})
+
+  $(".remove-item").on("click", function (e) {
+    e.preventDefault();
+    // $(this).closest(".ecommerce-card").remove();
+    let id = $(this).data('id');
+    let itemDeleteUrl = 'carts/';
+    let token = $("meta[name='csrf-token']").attr("content");
+    $.ajax({
+      type: 'DELETE',
+      url: itemDeleteUrl + id,
+      data: {
+        '_token': token,
+        'id': id
+      },
+      success: function (data) {
+        window.location.reload();
+      }
+    });
   })
+
+  $(".update-item").on("click", function (e) {
+    e.preventDefault();
+    // $(this).closest(".ecommerce-card").remove();
+    let id = $(this).data('id');
+    let qty = $(this).closest(".item-quantity .quantity-counter-wrapper").find('.quantity-counter').val();
+    let itemUpdateUrl = 'carts/';
+    let token = $("meta[name='csrf-token']").attr("content");
+    $.ajax({
+      type: 'PUT',
+      url: itemUpdateUrl + id,
+      data: {
+        '_token': token,
+        'id': id,
+        'qty': qty,
+      },
+      success: function (data) {
+        window.location.reload();
+      }
+    });
+  })
+
 })
+
+
 
 // on window resize hide sidebar
 $(window).on("resize", function () {

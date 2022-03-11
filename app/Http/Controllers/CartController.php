@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Item;
+use App\Models\Order;
 
 class CartController extends Controller
 {
@@ -15,6 +16,7 @@ class CartController extends Controller
      */
     public function index()
     {
+
         return view('cart.index');
     }
 
@@ -38,10 +40,11 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $rowId)
+    public function update($rowId)
     {
         $item = Cart::get($rowId);
-        Cart::update($item, ['qty' => $request->input('quantity')]);
+        $update = Cart::update($rowId, $item->qty + 1);
+        return response()->json($update);
     }
 
     /**
@@ -50,7 +53,21 @@ class CartController extends Controller
      */
     public function destroy($rowId)
     {
-        Cart::remove($rowId);
+        $remove = Cart::remove($rowId);
+        return response()->json($remove);
+    }
+
+    /**
+     * Store an order.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function checkout(Request $request)
+    {
+        $params = $request->all();
+        Order::create($params);
+        Cart::destroy();
+
         return redirect()->route('carts.index');
     }
 }
