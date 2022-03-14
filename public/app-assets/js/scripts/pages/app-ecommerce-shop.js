@@ -197,11 +197,32 @@ $(document).ready(function () {
     });
   })
 
-  $(".update-item").on("click", function (e) {
+  $(".decrease-qty").on("click", function (e) {
     e.preventDefault();
     // $(this).closest(".ecommerce-card").remove();
     let id = $(this).data('id');
-    let qty = $(this).closest(".item-quantity .quantity-counter-wrapper").find('.quantity-counter').val();
+    let qty = $(this).data('qty') - 1;
+    let itemUpdateUrl = 'carts/';
+    let token = $("meta[name='csrf-token']").attr("content");
+    $.ajax({
+      type: 'PUT',
+      url: itemUpdateUrl + id,
+      data: {
+        '_token': token,
+        'id': id,
+        'qty': qty,
+      },
+      success: function (data) {
+        window.location.reload();
+      }
+    });
+  })
+
+  $(".increase-qty").on("click", function (e) {
+    e.preventDefault();
+    // $(this).closest(".ecommerce-card").remove();
+    let id = $(this).data('id');
+    let qty = $(this).data('qty') + 1;
     let itemUpdateUrl = 'carts/';
     let token = $("meta[name='csrf-token']").attr("content");
     $.ajax({

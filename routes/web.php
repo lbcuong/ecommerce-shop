@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -47,12 +48,14 @@ Auth::routes();
 // });
 
 Route::group(['middleware' => ['role:customer']], function () {
-    Route::get('/carts/checkout', [ShopController::class, 'checkout'])->name('carts.checkout');
+    Route::post('/carts/checkout', [CartController::class, 'checkout'])->name('carts.checkout');
     Route::resource('carts', CartController::class);
 });
 
 Route::group(['middleware' => ['role:admin'], 'prefix' => 'dashboard'], function () {
+    Route::get('/ecommerce', [DashboardController::class, 'ecommerce'])->name('dashboards.ecommerce');
     Route::resource('items', ItemController::class)->only([
         'index', 'create', 'update', 'destroy', 'edit', 'store'
     ]);
+
 });

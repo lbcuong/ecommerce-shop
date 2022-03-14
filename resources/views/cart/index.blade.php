@@ -57,7 +57,7 @@
                                         <div class="item-quantity">
                                             <p class="quantity-title">Quantity</p>
                                             <div class="input-group quantity-counter-wrapper">
-                                                <input class="quantity-counter update-item" value="{{ $row->qty }}" name="quantity" data-id="{{ $row->rowId }}" readonly="readonly">
+                                                <input class="quantity-counter" value="{{ $row->qty }}" name="quantity" data-id="{{ $row->rowId }}" data-qty="{{ $row->qty }}" readonly="readonly">
                                             </div>
                                         </div>
                                         <p class="delivery-date">Delivery by, Wed Apr 25</p>
@@ -114,7 +114,7 @@
                                                 Subtotal
                                             </div>
                                             <div class="detail-amt">
-                                                {{ Cart::priceTotal() }}
+                                                đ {{ Cart::priceTotal() }}
                                             </div>
                                         </div>
                                         <div class="detail">
@@ -163,24 +163,28 @@
                                             <div class="form-group">
                                                 <label for="checkout-name">Full Name:</label>
                                                 <input type="text" id="checkout-name" class="form-control required" name="name">
+                                                <span class="text-danger">@error('name'){{$message}}@enderror</span>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="checkout-number">Mobile Number:</label>
                                                 <input type="number" id="checkout-number" class="form-control required" name="phone_number">
+                                                <span class="text-danger">@error('phone_number'){{$message}}@enderror</span>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="checkout-email">Email</label>
-                                                <input type="text" id="checkout-email" class="form-control required" name="email">
+                                                <input type="email" id="checkout-email" class="form-control required" name="email">
+                                                <span class="text-danger">@error('email'){{$message}}@enderror</span>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="checkout-address">Address</label>
-                                                <input type="number" id="checkout-address" class="form-control required" name="address">
+                                                <input type="text" id="checkout-address" class="form-control required" name="address">
+                                                <span class="text-danger">@error('address'){{$message}}@enderror</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 offset-md-6">
@@ -253,9 +257,9 @@
                                             </div>
                                         </div>
                                         <hr class="my-2">
-                                        -->
+                                        
                                         <ul class="other-payment-options list-unstyled">
-                                            <!--
+                                           
                                             <li>
                                                 <div class="vs-radio-con vs-radio-primary py-25">
                                                     <input type="radio" name="vueradio" value="false">
@@ -312,12 +316,12 @@
                                             </div>
                                             <hr>
                                             -->
-                                            <div class="gift-card">
-                                                <p>
-                                                    Cash On Delivery
-                                                </p>
-                                                <input name="payment_method" value="Cash On Delivery" type="hidden"/>
-                                            </div>
+                                        <div class="gift-card">
+                                            <p>
+                                                Cash On Delivery
+                                            </p>
+                                            <input name="payment_method" value="Cash On Delivery" type="hidden" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -331,10 +335,10 @@
                                     <div class="card-body">
                                         <div class="detail">
                                             <div class="details-title">
-                                                Price of 3 items
+                                                Price of {{ Cart::count() }} item(s)
                                             </div>
                                             <div class="detail-amt">
-                                                <strong>$699.30</strong>
+                                                <strong>đ {{ Cart::total() }}</strong>
                                             </div>
                                         </div>
                                         <div class="detail">
@@ -350,7 +354,13 @@
                                             <div class="details-title">
                                                 Amount Payable
                                             </div>
-                                            <div class="detail-amt total-amt">$699.30</div>
+                                            <div class="detail-amt total-amt">đ {{ Cart::total() }}</div>
+                                        </div>
+                                        <div class="detail">
+                                            <div class="details-title">
+                                                <input name="content" value="{{ Cart::content() }}" type="hidden" />
+                                                <input type="submit" value="Order" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

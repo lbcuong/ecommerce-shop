@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Item;
 use App\Models\Order;
@@ -16,7 +17,6 @@ class CartController extends Controller
      */
     public function index()
     {
-
         return view('cart.index');
     }
 
@@ -30,7 +30,7 @@ class CartController extends Controller
     {
         $item = Item::findOrFail($request->input('id'));
         Cart::add($item->id, $item->name, $request->input('quantity'), $item->price, 0, ['image' => $item->image])->associate('App\Models\Item');
-        return redirect()->route('carts.index');
+        return redirect()->route('detail', $item->id);
     }
 
     /**
@@ -40,10 +40,11 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($rowId)
+    public function update(Request $request)
     {
-        $item = Cart::get($rowId);
-        $update = Cart::update($rowId, $item->qty + 1);
+        $id = $request->id;
+        $qty = $request->qty;
+        $update = Cart::update($id, $qty);
         return response()->json($update);
     }
 
@@ -59,7 +60,7 @@ class CartController extends Controller
 
     /**
      * Store an order.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function checkout(Request $request)
