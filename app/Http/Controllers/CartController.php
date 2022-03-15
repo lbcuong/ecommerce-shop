@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Item;
 use App\Models\Order;
+use App\Models\PaymentMethod;
+use HoangPhi\VietnamMap\Models\Province;
+use HoangPhi\VietnamMap\Models\District;
+use HoangPhi\VietnamMap\Models\Ward;
 
 class CartController extends Controller
 {
@@ -17,7 +20,45 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('cart.index');
+        $addressTypes = ['Home', 'Work'];
+        $provinces = Province::select('id', 'name')->get();
+        $paymentMethods = PaymentMethod::select('name')->get();
+
+        return view('cart.index', compact('provinces', 'addressTypes', 'paymentMethods'));
+    }
+
+    /**
+     * Get District.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getDistrict(Request $request)
+    {
+        $provinceId = $request->post('provinceId');
+        $districts = District::where('province_id', $provinceId)->select('id', 'name')->get();
+        $html='<option value="">Please choose your District</option>';
+		foreach($districts as $district){
+			$html.='<option value="'.$district->id.'">'.$district->name.'</option>';
+		}
+		echo $html;
+    }
+
+    /**
+     * get Ward.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getWard(Request $request)
+    {
+        $districtId = $request->post('districtId');
+        $wards = District::where('district_id', $districtId)->select('id', 'name')->get();
+        $html='<option value="">Please choose your Ward</option>';
+		foreach($wards as $ward){
+			$html.='<option value="'.$ward->id.'">'.$ward->name.'</option>';
+		}
+		echo $html;
     }
 
     /**

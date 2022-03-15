@@ -20,7 +20,9 @@ class Orders extends Migration
             $table->string('address');
             $table->string('email');
             $table->longText('content');
-            $table->string('payment_method');
+            $table->unsignedBigInteger('payment_method_id');
+            $table->foreign("payment_method_id")->references('id')->on('payment_method')->onUpdate('cascade');
+            $table->enum('status', ['Ordered', 'Delivering', 'Delivered', 'Canceled'])->default('Ordered');
             $table->timestamps();
         });
     }
@@ -32,6 +34,6 @@ class Orders extends Migration
      */
     public function down()
     {
-        Schema::drop('orders');
+        Schema::dropIfExists('orders');
     }
 }

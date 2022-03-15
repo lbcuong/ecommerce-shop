@@ -105,6 +105,7 @@ $(document).ready(function () {
   })
 
   // Checkout Wizard
+  
   var checkoutWizard = $(".checkout-tab-steps"),
     checkoutValidation = checkoutWizard.show();
   if (checkoutWizard.length > 0) {
@@ -133,6 +134,7 @@ $(document).ready(function () {
         return checkoutValidation.valid();
       },
     });
+
     // to move to next step on place order and save address click
     $(".place-order, .delivery-address").on("click", function () {
       $(".checkout-tab-steps").steps("next", {});

@@ -341,6 +341,10 @@
     <script src="{{ asset('app-assets/js/scripts/pages/dashboard-ecommerce.js') }}"></script>
     <!-- END: Page JS-->
 
+    <!-- BEGIN: Custom JS-->
+    <script src="{{ asset('assets/js/scripts.js') }}"></script>
+    <!-- END: Custom JS-->
+
 </body>
 <!-- END: Body-->
 

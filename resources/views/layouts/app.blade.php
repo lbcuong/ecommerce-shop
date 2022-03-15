@@ -329,6 +329,10 @@
     <script src="{{ asset('app-assets/js/scripts/pages/app-ecommerce-details.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/forms/number-input.js') }}"></script>
     <!-- END: Page JS-->
+
+    <!-- BEGIN: Custom JS-->
+    <script src="{{ asset('assets/js/scripts.js') }}"></script>
+    <!-- END: Custom JS-->
 </body>
 
 </html>

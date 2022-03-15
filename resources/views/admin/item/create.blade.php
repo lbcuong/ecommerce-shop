@@ -45,10 +45,11 @@
                                                         <label>Category</label>
                                                         <select class="form-control" name="category_id">
                                                             @foreach ($categories as $category)
-                                                            <option disabled>-------- {{$category->name}} ---------</option>
+                                                            <optgroup label="{{$category->name}}">
                                                                 @foreach ($category->children as $child)
                                                                 <option value="{{$child->id}}"> {{$child->name}} </option>
                                                                 @endforeach
+                                                            </optgroup>
                                                             @endforeach
                                                         </select>
                                                         <span class="text-danger">@error('category_id'){{$message}}@enderror</span>

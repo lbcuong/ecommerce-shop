@@ -49,6 +49,8 @@ Auth::routes();
 
 Route::group(['middleware' => ['role:customer']], function () {
     Route::post('/carts/checkout', [CartController::class, 'checkout'])->name('carts.checkout');
+    Route::post('/carts/district', [CartController::class, 'getDistrict'])->name('carts.district');
+    Route::post('/carts/ward', [CartController::class, 'getWard'])->name('carts.ward');
     Route::resource('carts', CartController::class);
 });
 
