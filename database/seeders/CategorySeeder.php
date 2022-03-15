@@ -19,52 +19,52 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Mobile',
                 'parent_id' => NULL,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'Earphone',
                 'parent_id' => NULL,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'Backup Charger',
                 'parent_id' => NULL,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'iPhone',
                 'parent_id' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'Samsung',
                 'parent_id' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'Xiaomi',
                 'parent_id' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'Mozard',
                 'parent_id' => 2,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'Beats',
                 'parent_id' => 2,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'AVA+',
                 'parent_id' => 3,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
             [
                 'name' => 'Xmobile',
                 'parent_id' => 3,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ],
         ]);
     }

@@ -9,7 +9,7 @@
     <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>Shop - Vuexy - Bootstrap HTML admin template</title>
+    <title>Dashboard - Vuexy - Bootstrap HTML admin template</title>
     <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/apple-icon-120.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/ico/favicon.ico') }}">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
@@ -22,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/file-uploaders/dropzone.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/spinner/jquery.bootstrap-touchspin.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/swiper.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/charts/apexcharts.css') }}">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -39,6 +40,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/app-ecommerce-shop.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/file-uploaders/dropzone.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/app-ecommerce-details.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/dashboard-ecommerce.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/card-analytics.css') }}">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -269,9 +272,11 @@
                     <ul class="menu-content">
                         <li><a href="dashboard-analytics.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Analytics">Analytics</span></a>
                         </li>
-                        <li><a href="dashboard-ecommerce.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="eCommerce">eCommerce</span></a>
+                        <li class="{{ (request()->routeIs('dashboards.ecommerce')) ? 'active' : '' }}"><a href="{{ route('dashboards.ecommerce') }}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="eCommerce">eCommerce</span></a>
                         </li>
                     </ul>
+                </li>
+                <li class=" navigation-header"><span>Data</span>
                 </li>
                 <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title" data-i18n="User">User</span></a>
                     <ul class="menu-content">
@@ -282,8 +287,6 @@
                         <li><a href="app-user-edit.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Edit">Edit</span></a>
                         </li>
                     </ul>
-                </li>
-                <li class=" navigation-header"><span>Data</span>
                 </li>
                 <li class="nav-item {{ (request()->routeIs('items.index')) ? 'active' : '' }}"><a href="{{route('items.index')}}"><i class="feather icon-droplet"></i><span class="menu-title" data-i18n="Colors">Items</span></a>
                 </li>
@@ -321,6 +324,7 @@
     <script src="{{ asset('app-assets/vendors/js/extensions/dropzone.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/swiper.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/charts/apexcharts.min.js') }}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -334,7 +338,12 @@
     <script src="{{ asset('app-assets/js/scripts/extensions/dropzone.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/pages/app-ecommerce-details.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/forms/number-input.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/pages/dashboard-ecommerce.js') }}"></script>
     <!-- END: Page JS-->
+
+    <!-- BEGIN: Custom JS-->
+    <script src="{{ asset('assets/js/scripts.js') }}"></script>
+    <!-- END: Custom JS-->
 
 </body>
 <!-- END: Body-->

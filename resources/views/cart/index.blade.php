@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="content-body">
-            <form action="{{ route('carts.checkout') }}" method="post" class="icons-tab-steps checkout-tab-steps wizard-circle">
+            <form action="{{ route('carts.checkout') }}" method="post" class="">
                 @csrf
                 <!-- Checkout Place order starts -->
                 <h6><i class="step-icon step feather icon-shopping-cart"></i>Cart</h6>
@@ -57,7 +57,7 @@
                                         <div class="item-quantity">
                                             <p class="quantity-title">Quantity</p>
                                             <div class="input-group quantity-counter-wrapper">
-                                                <input class="quantity-counter update-item" value="{{ $row->qty }}" name="quantity" data-id="{{ $row->rowId }}" readonly="readonly">
+                                                <input class="quantity-counter" value="{{ $row->qty }}" name="quantity" data-id="{{ $row->rowId }}" data-qty="{{ $row->qty }}" readonly="readonly">
                                             </div>
                                         </div>
                                         <p class="delivery-date">Delivery by, Wed Apr 25</p>
@@ -114,7 +114,7 @@
                                                 Subtotal
                                             </div>
                                             <div class="detail-amt">
-                                                {{ Cart::priceTotal() }}
+                                                đ {{ Cart::priceTotal() }}
                                             </div>
                                         </div>
                                         <div class="detail">
@@ -174,13 +174,50 @@
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="checkout-email">Email</label>
-                                                <input type="text" id="checkout-email" class="form-control required" name="email">
+                                                <input type="email" id="checkout-email" class="form-control required" name="email">
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
-                                                <label for="checkout-address">Address</label>
-                                                <input type="number" id="checkout-address" class="form-control required" name="address">
+                                                <label for="add-province">Province</label>
+                                                <select class="form-control required" id="add-province">
+                                                <option value="">Please choose your Province</option>
+                                                    @foreach ($provinces as $province)
+                                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="add-district">District</label>
+                                                <select class="form-control required" id="add-district">
+                                                    <option>Please choose your district</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="add-ward">Ward</label>
+                                                <select class="form-control required" id="add-ward">
+                                                    <option>Please choose your ward</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="checkout-apt-number">Flat, House No:</label>
+                                                <input type="text" id="checkout-apt-number" class="form-control required" name="address">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label for="add-type">Address Type:</label>
+                                                <select class="form-control required" id="add-type" name="address_type">
+                                                    @foreach ($addressTypes as $addressType)
+                                                    <option value="{{$addressType}}">{{ $addressType }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 offset-md-6">
@@ -245,6 +282,7 @@
                                                 11/2020
                                             </div>
                                         </div>
+                                        
                                         <div class="customer-cvv mt-1">
                                             <div class="form-inline">
                                                 <label class="mb-50" for="card-holder-cvv">Enter CVV:</label>
@@ -255,69 +293,29 @@
                                         <hr class="my-2">
                                         -->
                                         <ul class="other-payment-options list-unstyled">
-                                            <!--
+                                            @foreach ($paymentMethods as $paymentMethod)
                                             <li>
                                                 <div class="vs-radio-con vs-radio-primary py-25">
-                                                    <input type="radio" name="vueradio" value="false">
+                                                    <input class="b" type="radio" name="payment_method" value="{{ $paymentMethod->name }}" {{ old('payment_method') == $paymentMethod->name ? checked : '' }}>
                                                     <span class="vs-radio">
                                                         <span class="vs-radio--border"></span>
                                                         <span class="vs-radio--circle"></span>
                                                     </span>
                                                     <span>
-                                                        Credit / Debit / ATM Card
+                                                        {{ $paymentMethod->name }}
                                                     </span>
                                                 </div>
                                             </li>
-                                            <li>
-                                                <div class="vs-radio-con vs-radio-primary py-25">
-                                                    <input type="radio" name="vueradio" value="false">
-                                                    <span class="vs-radio">
-                                                        <span class="vs-radio--border"></span>
-                                                        <span class="vs-radio--circle"></span>
-                                                    </span>
-                                                    <span>
-                                                        Net Banking
-                                                    </span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="vs-radio-con vs-radio-primary py-25">
-                                                    <input type="radio" name="vueradio" value="false">
-                                                    <span class="vs-radio">
-                                                        <span class="vs-radio--border"></span>
-                                                        <span class="vs-radio--circle"></span>
-                                                    </span>
-                                                    <span>
-                                                        EMI (Easy Installment)
-                                                    </span>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="vs-radio-con vs-radio-primary py-25">
-                                                    <input type="radio" name="vueradio" value="false">
-                                                    <span class="vs-radio">
-                                                        <span class="vs-radio--border"></span>
-                                                        <span class="vs-radio--circle"></span>
-                                                    </span>
-                                                    <span>
-                                                        Cash On Delivery
-                                                    </span>
-                                                </div>
-                                            </li>
+                                            @endforeach
                                         </ul>
-                                            <div class="gift-card">
-                                                <p><i class="feather icon-plus-square mr-25 font-medium-5"></i>
-                                                    Add Gift Card
-                                                </p>
-                                            </div>
-                                            <hr>
-                                            -->
-                                            <div class="gift-card">
-                                                <p>
-                                                    Cash On Delivery
-                                                </p>
-                                                <input name="payment_method" value="Cash On Delivery" type="hidden"/>
-                                            </div>
+                                        <!--
+                                        <div class="gift-card">
+                                            <p><i class="feather icon-plus-square mr-25 font-medium-5"></i>
+                                                Add Gift Card
+                                            </p>
+                                        </div>
+                                        <hr>
+                                        -->
                                     </div>
                                 </div>
                             </div>
@@ -331,10 +329,10 @@
                                     <div class="card-body">
                                         <div class="detail">
                                             <div class="details-title">
-                                                Price of 3 items
+                                                Price of {{ Cart::count() }} item(s)
                                             </div>
                                             <div class="detail-amt">
-                                                <strong>$699.30</strong>
+                                                <strong>đ {{ Cart::total() }}</strong>
                                             </div>
                                         </div>
                                         <div class="detail">
@@ -350,7 +348,13 @@
                                             <div class="details-title">
                                                 Amount Payable
                                             </div>
-                                            <div class="detail-amt total-amt">$699.30</div>
+                                            <div class="detail-amt total-amt">đ {{ Cart::total() }}</div>
+                                        </div>
+                                        <div class="detail">
+                                            <div class="details-title">
+                                                <input name="content" value="{{ Cart::content() }}" type="hidden" />
+                                                <input type="submit" value="Order" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

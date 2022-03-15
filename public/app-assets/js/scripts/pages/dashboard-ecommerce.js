@@ -274,7 +274,7 @@ $(window).on("load", function () {
     },
     series: [{
       name: 'Orders',
-      data: [10, 15, 8, 15, 7, 12, 8]
+      data: [10, 15, 8, 15, 7, 12, 8, 10, 1, 12]
     }],
 
     xaxis: {
