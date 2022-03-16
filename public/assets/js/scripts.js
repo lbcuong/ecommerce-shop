@@ -19,7 +19,7 @@ $(document).ready(function () {
     });
   })
 
-  $("#add-ward").change(function (e) {
+  $("#add-district").change(function (e) {
     e.preventDefault();
     let districtId = $(this).val();
     let cartUrl = 'carts/ward';

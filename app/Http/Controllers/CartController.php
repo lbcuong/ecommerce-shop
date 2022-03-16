@@ -22,13 +22,13 @@ class CartController extends Controller
     {
         $addressTypes = ['Home', 'Work'];
         $provinces = Province::select('id', 'name')->get();
-        $paymentMethods = PaymentMethod::select('name')->get();
+        $paymentMethods = PaymentMethod::select('id', 'name')->get();
 
         return view('cart.index', compact('provinces', 'addressTypes', 'paymentMethods'));
     }
 
     /**
-     * Get District.
+     * Display a listing of District after select Province.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -37,7 +37,7 @@ class CartController extends Controller
     {
         $provinceId = $request->post('provinceId');
         $districts = District::where('province_id', $provinceId)->select('id', 'name')->get();
-        $html='<option value="">Please choose your District</option>';
+        $html='<option value="" disabled selected hidden>Please choose your District</option>';
 		foreach($districts as $district){
 			$html.='<option value="'.$district->id.'">'.$district->name.'</option>';
 		}
@@ -45,7 +45,7 @@ class CartController extends Controller
     }
 
     /**
-     * get Ward.
+     * Display a listing of Ward after select District.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -53,8 +53,8 @@ class CartController extends Controller
     public function getWard(Request $request)
     {
         $districtId = $request->post('districtId');
-        $wards = District::where('district_id', $districtId)->select('id', 'name')->get();
-        $html='<option value="">Please choose your Ward</option>';
+        $wards = Ward::where('district_id', $districtId)->select('id', 'name')->get();
+        $html='<option value="" disabled selected hidden>Please choose your Ward</option>';
 		foreach($wards as $ward){
 			$html.='<option value="'.$ward->id.'">'.$ward->name.'</option>';
 		}
@@ -107,6 +107,15 @@ class CartController extends Controller
     public function checkout(Request $request)
     {
         $params = $request->all();
+        $province = Province::findOrFail($request->input('province'));
+        $provinceName = $province->name;
+        $district = District::findOrFail($request->input('district'));
+        $districtName = $district->name;
+        $ward = Ward::findOrFail($request->input('ward'));
+        $wardName = $ward->name;
+        $aptNumber = $request->input('apt-number');
+        $address = $aptNumber . ', ' . $wardName . ', ' . $districtName . ', ' . $provinceName;
+        $params['address'] = $address;
         Order::create($params);
         Cart::destroy();
 
