@@ -32,7 +32,8 @@
             </div>
         </div>
         <div class="content-body">
-            <form action="{{ route('carts.checkout') }}" method="post" class="">
+            @if (Cart::count() >= 1)
+            <form action="{{ route('carts.checkout') }}" method="post" class="icons-tab-steps checkout-tab-steps wizard-circle">
                 @csrf
                 <!-- Checkout Place order starts -->
                 <h6><i class="step-icon step feather icon-shopping-cart"></i>Cart</h6>
@@ -180,8 +181,8 @@
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="add-province">Province</label>
-                                                <select class="form-control required" id="add-province">
-                                                <option value="">Please choose your Province</option>
+                                                <select class="form-control required" id="add-province" name="province">
+                                                    <option value="" disabled selected hidden>Please choose your Province</option>
                                                     @foreach ($provinces as $province)
                                                     <option value="{{ $province->id }}">{{ $province->name }}</option>
                                                     @endforeach
@@ -191,23 +192,23 @@
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="add-district">District</label>
-                                                <select class="form-control required" id="add-district">
-                                                    <option>Please choose your district</option>
+                                                <select class="form-control required" id="add-district" name="district">
+                                                    <option disabled selected hidden>Please choose your District</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="add-ward">Ward</label>
-                                                <select class="form-control required" id="add-ward">
-                                                    <option>Please choose your ward</option>
+                                                <select class="form-control required" id="add-ward" name="ward">
+                                                    <option disabled selected hidden>Please choose your Ward</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-12">
                                             <div class="form-group">
                                                 <label for="checkout-apt-number">Flat, House No:</label>
-                                                <input type="text" id="checkout-apt-number" class="form-control required" name="address">
+                                                <input type="text" id="checkout-apt-number" class="form-control required" name="apt-number">
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-12">
@@ -296,7 +297,7 @@
                                             @foreach ($paymentMethods as $paymentMethod)
                                             <li>
                                                 <div class="vs-radio-con vs-radio-primary py-25">
-                                                    <input class="b" type="radio" name="payment_method" value="{{ $paymentMethod->name }}" {{ old('payment_method') == $paymentMethod->name ? checked : '' }}>
+                                                    <input type="radio" name="payment_method_id" value="{{ $paymentMethod->id }}" {{$loop->first ? 'checked="checked"' : ''}}>
                                                     <span class="vs-radio">
                                                         <span class="vs-radio--border"></span>
                                                         <span class="vs-radio--circle"></span>
@@ -365,7 +366,14 @@
 
                 <!-- Checkout Payment Starts -->
             </form>
-
+            @else
+            <div class="d-flex justify-content-center">
+                <p class="text-primary font-large-1">Your cart is empty!</p>
+            </div>
+            <div class="d-flex justify-content-center">
+                <a class="btn bg-gradient-primary" href="{{ route('/')}}">Continue shopping</a>
+            </div>
+            @endif
         </div>
     </div>
 </div>

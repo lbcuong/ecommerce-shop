@@ -17,12 +17,12 @@ class ShopController extends Controller
         $items = Item::with('category')
             ->where('name', 'like', '%'.$filter.'%')
             ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
-            ->paginate(5);
+            ->paginate(9);
         }
         else {
             $items = Item::with('category')
             ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
-            ->paginate(5); 
+            ->paginate(9); 
         }
 
         $brands = Category::with('items')->withCount('items')->where('parent_id', '!=', NULL)->get();
