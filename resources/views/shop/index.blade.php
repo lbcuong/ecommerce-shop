@@ -48,7 +48,7 @@
                                     </div>
                                 </div>
                                 <div class="view-options">
-                                    <select class="price-options form-control" id="ecommerce-price-options">
+                                    <select class="price-options form-control" id="ecommerce-price-options" name="price-sorting">
                                         <option selected>Featured</option>
                                         <option value="1">Lowest</option>
                                         <option value="2">Highest</option>

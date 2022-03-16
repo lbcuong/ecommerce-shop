@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/forms/spinner/jquery.bootstrap-touchspin.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/extensions/swiper.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/charts/apexcharts.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/tables/datatable/datatables.min.css') }}">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -280,7 +281,7 @@
                 </li>
                 <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title" data-i18n="User">User</span></a>
                     <ul class="menu-content">
-                        <li><a href="app-user-list.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">List</span></a>
+                        <li class="{{ (request()->routeIs('users.index')) ? 'active' : '' }}"><a href="{{ route('users.index') }}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">List</span></a>
                         </li>
                         <li><a href="app-user-view.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">View</span></a>
                         </li>
@@ -325,6 +326,15 @@
     <script src="{{ asset('app-assets/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/swiper.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/charts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.buttons.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -339,12 +349,13 @@
     <script src="{{ asset('app-assets/js/scripts/pages/app-ecommerce-details.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/forms/number-input.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/pages/dashboard-ecommerce.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/datatables/datatable.js') }}"></script>
     <!-- END: Page JS-->
 
     <!-- BEGIN: Custom JS-->
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <!-- END: Custom JS-->
-
+    @stack('scripts')
 </body>
 <!-- END: Body-->
 

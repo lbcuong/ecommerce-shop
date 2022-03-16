@@ -12,17 +12,49 @@ class ShopController extends Controller
     public function index(Request $request)
     {
         $filter = $request->input('filter');
+        $priceSorting = $request->input('price-sorting');
 
         if (!empty($filter)) {
-        $items = Item::with('category')
-            ->where('name', 'like', '%'.$filter.'%')
-            ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
-            ->paginate(9);
-        }
-        else {
-            $items = Item::with('category')
-            ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
-            ->paginate(9); 
+            switch ($priceSorting) {
+                case ('1'):
+                    $items = Item::with('category')
+                        ->where('name', 'like', '%' . $filter . '%')
+                        ->orderBy('price', 'ASC')
+                        ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
+                        ->paginate(9);
+                    break;
+                case ('2'):
+                    $items = Item::with('category')
+                        ->where('name', 'like', '%' . $filter . '%')
+                        ->orderBy('price', 'DESC')
+                        ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
+                        ->paginate(9);
+                    break;
+                default:
+                    $items = Item::with('category')
+                        ->where('name', 'like', '%' . $filter . '%')
+                        ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
+                        ->paginate(9);
+            }
+        } else {
+            switch ($priceSorting) {
+                case ('1'):
+                    $items = Item::with('category')
+                        ->orderBy('price', 'ASC')
+                        ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
+                        ->paginate(9);
+                    break;
+                case ('2'):
+                    $items = Item::with('category')
+                        ->orderBy('price', 'DESC')
+                        ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
+                        ->paginate(9);
+                    break;
+                default:
+                    $items = Item::with('category')
+                        ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
+                        ->paginate(9);
+            }
         }
 
         $brands = Category::with('items')->withCount('items')->where('parent_id', '!=', NULL)->get();
