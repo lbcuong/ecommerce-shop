@@ -68,17 +68,17 @@ class ShopController extends Controller
 
         foreach ($domains as $domain) {
             if ($domainEmail == $domain->domain) {
-                $tenantId = Domain::where('domain', $domain->domain)->select('tenant_id')->get();
+                $tenantId = Domain::where('domain', $domain->domain)->select('tenant_id')->first();
                 if (!empty($tenantId)) {
-                    $database = Tenant::where('id', $tenantId)->select('database')->get();
+                    $database = Tenant::where('id', $tenantId->tenant_id)->select('database')->first();
                     if (!empty($database)) {
-                        $a = $database;
+                        $a = $database->database;
                     }
                 }
             }
         }
 
-        return view('shop.index', compact('items', 'brands', 'categories', 'a', 'database'));
+        return view('shop.index', compact('items', 'brands', 'categories', 'a'));
     }
 
     public function detail($id)
