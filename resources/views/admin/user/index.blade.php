@@ -33,25 +33,13 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <a class="btn btn-block btn-primary text-white" href="{{ route('users.create')}}">New User</a>
+                                </div>
+                            </div>
                             <div class="card-content">
                                 <div class="card-body card-dashboard">
-                                    <div class="ag-btns d-flex flex-wrap">
-                                        <div class="action-btns">
-                                            <div class="btn-dropdown ">
-                                                <div class="btn-group dropdown actions-dropodown">
-                                                    <button type="button" class="btn btn-white px-2 py-75 dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Actions
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="#"><i class="feather icon-trash-2"></i> Delete</a>
-                                                        <a class="dropdown-item" href="#"><i class="feather icon-clipboard"></i> Archive</a>
-                                                        <a class="dropdown-item" href="#"><i class="feather icon-printer"></i> Print</a>
-                                                        <a class="dropdown-item" href="#"><i class="feather icon-download"></i> CSV</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="table-responsive">
                                         {{ $dataTable->table() }}
                                     </div>

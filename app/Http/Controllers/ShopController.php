@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Item;
+use App\Models\Tenant;
+use App\Models\Domain;
 use Illuminate\Support\Facades\DB;
 
 class ShopController extends Controller
@@ -60,7 +62,23 @@ class ShopController extends Controller
         $brands = Category::with('items')->withCount('items')->where('parent_id', '!=', NULL)->get();
         $categories = Category::where('parent_id', '=', NULL)->select('name')->get();
 
-        return view('shop.index', compact('items', 'brands', 'categories'));
+        $domains = Domain::select('domain')->get();
+        $domainEmail = 'odinbi.com';
+        $a = '';
+
+        foreach ($domains as $domain) {
+            if ($domainEmail == $domain->domain) {
+                $tenantId = Domain::where('domain', $domain->domain)->select('tenant_id')->get();
+                if (!empty($tenantId)) {
+                    $database = Tenant::where('id', $tenantId)->select('database')->get();
+                    if (!empty($database)) {
+                        $a = $database;
+                    }
+                }
+            }
+        }
+
+        return view('shop.index', compact('items', 'brands', 'categories', 'a', 'database'));
     }
 
     public function detail($id)

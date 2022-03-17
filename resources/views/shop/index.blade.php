@@ -44,7 +44,7 @@
                                         <span class="navbar-toggler-icon d-block d-lg-none"><i class="feather icon-menu"></i></span>
                                     </button>
                                     <div class="search-results">
-                                        16285 results found
+                                        {{ $a }}
                                     </div>
                                 </div>
                                 <div class="view-options">

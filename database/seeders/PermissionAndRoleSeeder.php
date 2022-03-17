@@ -38,13 +38,13 @@ class PermissionAndRoleSeeder extends Seeder
 
         $user = User::create([
             'name' => 'admin', 
-            'email' => 'admin@test.com',
+            'email' => 'admin@email.com',
             'password' => bcrypt('password')
         ]);
 
         $user1 = User::create([
             'name' => 'user', 
-            'email' => 'user@test.com',
+            'email' => 'user@email.com',
             'password' => bcrypt('password')
         ]);
 
