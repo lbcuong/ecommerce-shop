@@ -63,12 +63,14 @@ class ShopController extends Controller
         $categories = Category::where('parent_id', '=', NULL)->select('name')->get();
 
         $domains = Domain::select('domain')->get();
-        $domainEmail = 'odinbi.com';
+        $extraction = explode('@', 'lecuong@dinco.com.vn');
+        $domainEmail = array_pop($extraction);
         $a = '';
-
+        $b = '';
         foreach ($domains as $domain) {
             if ($domainEmail == $domain->domain) {
                 $tenantId = Domain::where('domain', $domain->domain)->select('tenant_id')->first();
+                $b = $tenantId;
                 if (!empty($tenantId)) {
                     $database = Tenant::where('id', $tenantId->tenant_id)->select('database')->first();
                     if (!empty($database)) {
@@ -78,7 +80,7 @@ class ShopController extends Controller
             }
         }
 
-        return view('shop.index', compact('items', 'brands', 'categories', 'a'));
+        return view('shop.index', compact('items', 'brands', 'categories', 'a', 'b'));
     }
 
     public function detail($id)
