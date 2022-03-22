@@ -21,7 +21,10 @@ class UsersDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'users.action');
+            ->addColumn('action', function ($user) {
+                return '<a class="managing text-decoration-none mr-2" href="' . route('users.edit', $user->id) . '"><i class="feather icon-edit"></i></a>
+                <a class="managing text-decoration-none" href="' . route('users.destroy', $user->id) . '"><i class="feather icon-trash-2"></i></a>';
+            });
     }
 
     /**
@@ -48,13 +51,13 @@ class UsersDataTable extends DataTable
             ->minifiedAjax()
             //->dom('Bfrtip')
             ->orderBy(1);
-            //->buttons(
-            //    Button::make('create')->action("window.location = '" . route('users.create') . "';"),
-            //    Button::make('export'),
-            //    Button::make('print'),
-            //    Button::make('reset'),
-            //   Button::make('reload')
-            //);
+        //->buttons(
+        //    Button::make('create')->action("window.location = '" . route('users.create') . "';"),
+        //    Button::make('export'),
+        //    Button::make('print'),
+        //    Button::make('reset'),
+        //   Button::make('reload')
+        //);
     }
 
     /**

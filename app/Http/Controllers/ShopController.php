@@ -62,25 +62,25 @@ class ShopController extends Controller
         $brands = Category::with('items')->withCount('items')->where('parent_id', '!=', NULL)->get();
         $categories = Category::where('parent_id', '=', NULL)->select('name')->get();
 
-        $domains = Domain::select('domain')->get();
-        $extraction = explode('@', 'lecuong@dinco.com.vn');
-        $domainEmail = array_pop($extraction);
-        $a = '';
-        $b = '';
-        foreach ($domains as $domain) {
-            if ($domainEmail == $domain->domain) {
-                $tenantId = Domain::where('domain', $domain->domain)->select('tenant_id')->first();
-                $b = $tenantId;
-                if (!empty($tenantId)) {
-                    $database = Tenant::where('id', $tenantId->tenant_id)->select('database')->first();
-                    if (!empty($database)) {
-                        $a = $database->database;
-                    }
-                }
-            }
-        }
+        // $domains = Domain::select('domain')->get();
+        // $extraction = explode('@', 'lecuong@dinco.com.vn');
+        // $domainEmail = array_pop($extraction);
+        // $a = '';
+        // $b = '';
+        // foreach ($domains as $domain) {
+        //     if ($domainEmail == $domain->domain) {
+        //         $tenantId = Domain::where('domain', $domain->domain)->select('tenant_id')->first();
+        //         $b = $tenantId;
+        //         if (!empty($tenantId)) {
+        //             $database = Tenant::where('id', $tenantId->tenant_id)->select('database')->first();
+        //             if (!empty($database)) {
+        //                 $a = $database->database;
+        //             }
+        //         }
+        //     }
+        // }
 
-        return view('shop.index', compact('items', 'brands', 'categories', 'a', 'b'));
+        return view('shop.index', compact('items', 'brands', 'categories'));
     }
 
     public function detail($id)

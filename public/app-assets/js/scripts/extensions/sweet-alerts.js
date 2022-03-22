@@ -1,10 +1,10 @@
 /*=========================================================================================
-	File Name: sweet-alerts.js
-	Description: A beautiful replacement for javascript alerts
-	----------------------------------------------------------------------------------------
-	Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-	Author: Pixinvent
-	Author URL: hhttp://www.themeforest.net/user/pixinvent
+  File Name: sweet-alerts.js
+  Description: A beautiful replacement for javascript alerts
+  ----------------------------------------------------------------------------------------
+  Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
+  Author: Pixinvent
+  Author URL: hhttp://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
 $(document).ready(function () {
 
@@ -329,7 +329,7 @@ $(document).ready(function () {
 
   // confirm options
 
-  $('#confirm-text').on('click', function () {
+  $('.confirm-text').on('click', function () {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -347,10 +347,14 @@ $(document).ready(function () {
           {
             type: "success",
             title: 'Deleted!',
-            text: 'Your file has been deleted.',
+            text: 'Your data has been deleted.',
             confirmButtonClass: 'btn btn-success',
           }
-        )
+        ).then(function (result) {      // submit after click OK ( customize )
+          if (result.value) {
+            $(".form-confirm-text").submit()
+          }
+        });
       }
     })
   });

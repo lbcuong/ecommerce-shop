@@ -8,10 +8,14 @@
             <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-left mb-0">Items</h2>
+                        <h2 class="content-header-title float-left mb-0">Thumb View</h2>
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item active"><a href="index.html">Items</a>
+                                <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#">Data List</a>
+                                </li>
+                                <li class="breadcrumb-item active">Thumb View
                                 </li>
                             </ol>
                         </div>
@@ -28,66 +32,82 @@
             </div>
         </div>
         <div class="content-body">
-            <!-- Zero configuration table -->
-            <section id="basic-datatable">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <div>
-                                    <a class="btn btn-block btn-primary text-white" href="{{ route('items.create')}}">New Item</a>
-                                </div>
-                            </div>
-                            <div class="card-content">
-                                <div class="card-body card-dashboard">
-                                    <div class="table-responsive">
-                                        <table class="table zero-configuration">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Image</th>
-                                                    <th>Category</th>
-                                                    <th>Price (đ)</th>
-                                                    <th>Quantity</th>
-                                                    <th>Detail</th>
-                                                    <th></th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($items as $item)
-                                                <tr>
-                                                    <td>{{ $item->name }}</td>
-                                                    <td>
-                                                        <img class="img-fluid" src="{{ asset($item->image) }}" alt="$item->image">
-                                                    </td>
-                                                    <td>{{ $item->category->name }}</td>
-                                                    <td>{{number_format($item->price, 0, ',', ',')}}</td>
-                                                    <td>{{ $item->quantity }}</td>
-                                                    <td>{{ $item->detail }}</td>
-                                                    <td>
-                                                        <a class='managing text-decoration-none' href="{{ route('items.edit', $item->id) }}"><i class='feather icon-edit'></i></a>
-                                                    </td>
-                                                    <td>
-                                                        <form action="{{ route('items.destroy', $item->id) }}" method="POST">
-                                                            @csrf
-
-                                                            @method('DELETE')
-
-                                                            <a class="managing text-decoration-none" onclick="return confirm('Are you sure to delete {{$item->name}} item?')"><i class='feather icon-trash'></i></a>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+            <!-- Data list view starts -->
+            <section id="data-thumb-view" class="data-thumb-view-header">
+                <div class="action-btns d-none">
+                    <div class="btn-dropdown mr-1 mb-1">
+                        <div class="btn-group dropdown actions-dropodown">
+                            <button type="button" class="btn btn-white px-1 py-1 dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Actions
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#"><i class="feather icon-trash"></i>Delete</a>
+                                <a class="dropdown-item" href="#"><i class="feather icon-archive"></i>Archive</a>
+                                <a class="dropdown-item" href="#"><i class="feather icon-file"></i>Print</a>
+                                <a class="dropdown-item" href="#"><i class="feather icon-save"></i>Another Action</a>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- dataTable starts -->
+                <div class="table-responsive">
+                    <table class="table data-thumb-view" id="dataTable">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Image</th>
+                                <th>NAME</th>
+                                <th>CATEGORY</th>
+                                <th>PRICE (đ)</th>
+                                <th>QUANTITY</th>
+                                <th>DETAIL</th>
+                                <th>EDIT</th>
+                                <th>DELETE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($items as $item)
+                            <tr>
+                                <td></td>
+                                <td class="product-img"><img src="{{ asset($item->image) }}" alt="$item->image">
+                                </td>
+                                <td class="product-name">{{ $item->name }}</td>
+                                <td class="product-category">{{ $item->category->name }}</td>
+                                <td class="product-price">{{number_format($item->price, 0, ',', ',')}}</td>
+                                <td class="product-quantity">{{ $item->quantity }}</td>
+                                <td></td>
+                                <td>
+                                    <span class="action-edit" data-id="{{ $item->id }}" data-name="{{ $item->name }}"><i class="feather icon-edit"></i></span>
+                                    <!-- <a class='managing text-decoration-none' href="{{ route('items.edit', $item->id) }}"><i class='feather icon-edit'></i></a>
+                                    -->
+                                </td>
+                                <td>
+                                    <form class="form-confirm-text" action="{{ route('items.destroy', $item->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <!-- Confirm option section start -->
+                                        <section id="confirm-option">
+                                            <a class="managing text-decoration-none confirm-text">
+                                                <i class='feather icon-trash'></i>
+                                            </a>
+                                        </section>
+                                        <!-- // Confirm option section end -->
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- dataTable ends -->
+
+                <!-- add new sidebar starts -->
+                @include('admin.item.sidebar.create-sidebar')
+                @include('admin.item.sidebar.edit-sidebar')
+                <!-- add new sidebar ends -->
             </section>
+            <!-- Data list view end -->
+
         </div>
     </div>
 </div>

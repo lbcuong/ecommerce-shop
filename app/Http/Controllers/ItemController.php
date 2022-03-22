@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ItemRequest;
 use App\Models\Item;
 use App\Models\Category;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Exists;
 use Illuminate\Support\Facades\File;
 
@@ -14,9 +14,12 @@ class ItemController extends Controller
     {
         $items = Item::with('category')
             ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
+            ->orderBy('id', 'DESC')
             ->get();
 
-        return view('admin.item.index', compact('items'));
+        $categories = Category::with('children')->where('parent_id', '=', NULL)->select('id', 'name')->get();
+
+        return view('admin.item.index', compact('items', 'categories'));
     }
 
     public function create()
@@ -26,7 +29,7 @@ class ItemController extends Controller
         return view('admin.item.create', compact('categories'));
     }
 
-    public function store(ItemRequest $request)
+    public function store(Request $request)
     {
         $params = $request->all();
         $image = $request->image;
@@ -52,7 +55,7 @@ class ItemController extends Controller
         return view('admin.item.edit', compact('item', 'categories'));
     }
 
-    public function update(ItemRequest $request)
+    public function update(Request $request)
     {
         $item = Item::find($request->id);
         $params = $request->all();
@@ -63,8 +66,7 @@ class ItemController extends Controller
                 File::delete($destination);
             }
             $params['image'] = $image->move('app-assets/images/pages/eCommerce/', $image->getClientOriginalName());
-        }
-        else {
+        } else {
             $params['image'] = Item::where('id', $request->id)->get('name');
         }
         $item->update($params);

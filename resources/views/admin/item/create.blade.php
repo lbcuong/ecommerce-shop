@@ -58,7 +58,7 @@
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label>Quantity</label>
-                                                        <input type="text" class="form-control" placeholder="Quantity" name="quantity">
+                                                        <input type="number" class="form-control" placeholder="Quantity" name="quantity">
                                                         <span class="text-danger">@error('quantity'){{$message}}@enderror</span>
                                                     </div>
                                                 </div>
@@ -67,7 +67,7 @@
                                                 <div class="form-group">
                                                     <div class="controls">
                                                         <label>Price</label>
-                                                        <input type="text" class="form-control" placeholder="Price" name="price">
+                                                        <input type="number" class="form-control" placeholder="Price" name="price">
                                                         <span class="text-danger">@error('price'){{$message}}@enderror</span>
                                                     </div>
                                                 </div>
