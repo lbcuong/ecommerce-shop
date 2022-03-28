@@ -41,7 +41,7 @@
                         <div class="row mb-5 mt-2">
                             <div class="col-12 col-md-5 d-flex align-items-center justify-content-center mb-2 mb-md-0">
                                 <div class="d-flex align-items-center justify-content-center">
-                                    <img src="{{ asset($item->image) }}" class="img-fluid" alt="product image">
+                                    <img src="{{ Storage::url($item->image) }}" class="img-fluid" alt="product image">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -164,7 +164,7 @@
                                             </p>
                                         </div>
                                         <div class="img-container w-50 mx-auto my-2 py-75">
-                                            <img src="{{ asset($relatedItem->image) }}" class="img-fluid" alt="image">
+                                            <img src="{{ Storage::url($relatedItem->image) }}" class="img-fluid" alt="image">
                                         </div>
                                         <div class="item-meta">
                                             <div class="product-rating">

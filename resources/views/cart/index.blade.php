@@ -45,7 +45,7 @@
                                 <div class="card-content">
                                     <div class="item-img text-center">
                                         <a href="app-ecommerce-details.html">
-                                            <img class="img-fluid" src="{{ asset($row->options->image) }}" alt="img-placeholder">
+                                            <img class="img-fluid" src="{{ Storage::url($row->options->image) }}" alt="img-placeholder">
                                         </a>
                                     </div>
                                     <div class="card-body">

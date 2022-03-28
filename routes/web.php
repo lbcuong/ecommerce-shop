@@ -58,5 +58,7 @@ Route::group(['middleware' => ['auth', 'role:customer']], function () {
 Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'dashboard'], function () {
     Route::get('/ecommerce', [DashboardController::class, 'ecommerce'])->name('dashboards.ecommerce');
     Route::resource('items', ItemController::class);
+    Route::post('/items/edit/{item}', [ItemController::class, 'edit'])->name('items.edit');
+
     Route::resource('users', UserController::class);
 });

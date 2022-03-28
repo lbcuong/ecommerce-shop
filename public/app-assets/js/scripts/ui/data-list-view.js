@@ -125,11 +125,34 @@ $(document).ready(function () {
   })
 
   // On Edit
-  $('.action-edit').on("click", function (e) {
+  $('body').on("click", ".action-edit", function (e) {
     e.stopPropagation();
     e.preventDefault();
-    let categoryId = $(this).attr("data-id");
-    alert(categoryId);
+    let id = $(this).attr("data-id");
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+
+    $.ajax({
+      url: 'items/edit/' + id,
+      method: "POST",
+      data: {},
+      type: 'json',
+      success: function (data) {
+        $('.action-edit').attr('action', data.route);
+        $.each(data.itemData, function (index, value) {
+            $('input[name=' + index + ']').val(value);
+            if (index == 'detail') {
+              $('textarea[name=' + index + ']').html(value);
+            }
+            if (index == 'category_id') {
+              $('select[name=' + index + ']').val(value);
+            }
+        });
+      }
+    });
 
     $(".edit-data").addClass("show");
     $(".overlay-bg").addClass("show");

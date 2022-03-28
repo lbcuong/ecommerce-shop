@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Exists;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -47,12 +48,12 @@ class ItemController extends Controller
         return redirect()->route('items.index');
     }
 
-    public function edit($id)
+    public function edit(Item $item)
     {
-        $item = Item::find($id);
-        $categories = Category::with('children')->where('parent_id', '=', NULL)->select('id', 'name')->get();
+        $itemData = $item;
+        $route = route('items.edit', $itemData->id);
 
-        return view('admin.item.edit', compact('item', 'categories'));
+        return response()->json(array('success' => true, 'itemData' => $itemData, 'route' => $route));
     }
 
     public function update(Request $request)
@@ -61,13 +62,9 @@ class ItemController extends Controller
         $params = $request->all();
         $image = $request->image;
         if ($request->hasfile('image')) {
-            $destination = 'app-assets/images/pages/eCommerce/' . $image->getClientOriginalName();
-            if (File::exists($destination)) {
-                File::delete($destination);
-            }
-            $params['image'] = $image->move('app-assets/images/pages/eCommerce/', $image->getClientOriginalName());
-        } else {
-            $params['image'] = Item::where('id', $request->id)->get('name');
+            $path = 'public/avatar';
+            $image = Storage::putFile($path, $request->file('image'));
+            $params['image'] = $image;
         }
         $item->update($params);
 

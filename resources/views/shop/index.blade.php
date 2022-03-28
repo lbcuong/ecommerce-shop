@@ -95,7 +95,7 @@
                         <div class="card-content">
                             <div class="item-img text-center">
                                 <a href="{{ route('detail', ['id' => $item->id]) }}">
-                                    <img class="img-fluid" src="{{ asset($item->image) }}" alt="img-placeholder"></a>
+                                    <img class="img-fluid" src="{{ Storage::url($item->image) }}" alt="img-placeholder"></a>
                             </div>
                             <div class="card-body">
                                 <div class="item-wrapper">

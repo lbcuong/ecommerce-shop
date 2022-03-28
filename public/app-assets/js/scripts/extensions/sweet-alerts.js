@@ -330,6 +330,9 @@ $(document).ready(function () {
   // confirm options
 
   $('.confirm-text').on('click', function () {
+    let id = $(this).attr("data-id");
+    let formId = '#form-' + id;
+    
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -352,7 +355,7 @@ $(document).ready(function () {
           }
         ).then(function (result) {      // submit after click OK ( customize )
           if (result.value) {
-            $(".form-confirm-text").submit()
+            $(formId).submit()
           }
         });
       }
