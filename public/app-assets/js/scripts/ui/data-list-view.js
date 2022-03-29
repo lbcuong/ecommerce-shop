@@ -122,6 +122,9 @@ $(document).ready(function () {
     $(".overlay-bg").removeClass("show")
     $("#data-name, #data-price").val("")
     $("#data-category, #data-status").prop("selectedIndex", 0)
+    $('#form-item-create').closest('form').find("input, textarea, select").val("");
+    $('#form-item-create').closest('form').find("select").val(4);
+    $('#form-item-create').closest('form').find("span").html("");
   })
 
   // On Edit
@@ -143,19 +146,54 @@ $(document).ready(function () {
       success: function (data) {
         $('.action-edit').attr('action', data.route);
         $.each(data.itemData, function (index, value) {
-            $('input[name=' + index + ']').val(value);
-            if (index == 'detail') {
-              $('textarea[name=' + index + ']').html(value);
-            }
-            if (index == 'category_id') {
-              $('select[name=' + index + ']').val(value);
-            }
+          $('input[name=' + index + ']').val(value);
+          if (index == 'detail') {
+            $('textarea[name=' + index + ']').html(value);
+          }
+          if (index == 'category_id') {
+            $('select[name=' + index + ']').val(value);
+          }
         });
       }
     });
 
-    $(".edit-data").addClass("show");
+    $(".add-new-data").addClass("show");
     $(".overlay-bg").addClass("show");
+  });
+
+  // Update data
+  $('#form-item-create').on('submit', function (e) {
+    e.preventDefault();
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    let id = $(this).attr("data-id");
+    let formData = new FormData(this);
+    let url = 'items/update';
+    console.log(formData);
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: function (response) {
+        console.log(response);
+        if (response) {
+          location.reload();
+        }
+      },
+      error: function (response) {
+        $('#name-input-error').text(response.responseJSON.errors.name);
+        $('#category-input-error').text(response.responseJSON.errors.category_id);
+        $('#price-input-error').text(response.responseJSON.errors.price);
+        $('#quantity-input-error').text(response.responseJSON.errors.quantity);
+        $('#detail-input-error').text(response.responseJSON.errors.detail);
+        $('#image-input-error').text(response.responseJSON.errors.image);
+      }
+    });
   });
 
   // On Delete
@@ -186,4 +224,46 @@ $(document).ready(function () {
   if (navigator.userAgent.indexOf("Mac OS X") != -1) {
     $(".dt-checkboxes-cell input, .dt-checkboxes").addClass("mac-checkbox")
   }
+
+  // On detail
+  $('body').on("click", ".action-detail", function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    let id = $(this).attr("data-id");
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+
+    $.ajax({
+      url: 'items/show/' + id,
+      method: "POST",
+      data: {},
+      type: 'json',
+      success: function (data) {
+        $('.action-detail').attr('action', data.route);
+        $('#primary').modal("show");
+        $.each(data.itemData, function (index, value) {
+          if (index == 'image') {
+            $('.img-thumbnail').attr('src', value);
+          }
+          if (index == 'detail') {
+            $('p[name=' + index + ']').html(value);
+          }
+          if (index == 'name') {
+            $('h5[name=' + index + ']').html(value + "'s detail");
+          }
+        });
+      }
+    });
+  });
+
+  // $("body").on('click', ("tbody tr[role='row']") || (".dt-checkboxes"), function (e){
+  //   if ($("tr[role='row']").hasClass("selected")) {
+  //     alert('Yes');
+  //   } else {
+  //     alert('No');
+  //   } 
+  // })
 })

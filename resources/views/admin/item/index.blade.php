@@ -57,7 +57,7 @@
                     </div>
                     <!-- dataTable starts -->
                     <div class="table-responsive">
-                        <table class="table data-thumb-view" id="dataTable">
+                        <table class="table data-thumb-view">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -66,39 +66,36 @@
                                     <th>CATEGORY</th>
                                     <th>PRICE (đ)</th>
                                     <th>QUANTITY</th>
-                                    <th>DETAIL</th>
-                                    <th>EDIT</th>
-                                    <th>DELETE</th>
+                                    <th>ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($items as $item)
                                     <tr>
                                         <td></td>
-                                        <td class="product-img"><img src="{{ Storage::url($item->image) }}"
-                                                alt="Image">
+                                        <td class="product-img">
+                                            <img src="{{ Storage::url($item->image) }}" alt="Image">
                                         </td>
                                         <td class="product-name">{{ $item->name }}</td>
                                         <td class="product-category">{{ $item->category->name }}</td>
                                         <td class="product-price">{{ number_format($item->price, 0, ',', ',') }}</td>
                                         <td class="product-quantity">{{ $item->quantity }}</td>
-                                        <td class="product-detail">{{ $item->detail }}</td>
-                                        <td>
-                                            <span class="action-edit" data-id="{{ $item->id }}"><i
-                                                    class="feather icon-edit"></i></span>
-                                        </td>
-                                        <td>
+                                        <td class="product-action">
+                                            <span class="action-detail" data-id="{{ $item->id }}" data-toggle="modal"
+                                                data-target="#primary">
+                                                <i class="feather icon-file-text"></i>
+                                            </span>
+                                            <span class="action-edit" data-id="{{ $item->id }}">
+                                                <i class="feather icon-edit"></i>
+                                            </span>
                                             <form id="form-{{ $item->id }}"
                                                 action="{{ route('items.destroy', $item->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <!-- Confirm option section start -->
-                                                <section id="confirm-option">
-                                                    <a class="managing text-decoration-none confirm-text"
-                                                        data-id="{{ $item->id }}">
-                                                        <i class='feather icon-trash'></i>
-                                                    </a>
-                                                </section>
+                                                <span class="confirm-text" data-id="{{ $item->id }}">
+                                                    <i class='feather icon-trash'></i>
+                                                </span>
                                                 <!-- // Confirm option section end -->
                                             </form>
                                         </td>
@@ -111,8 +108,11 @@
 
                     <!-- add new sidebar starts -->
                     @include('admin.item.sidebar.create-sidebar')
-                    @include('admin.item.sidebar.edit-sidebar')
                     <!-- add new sidebar ends -->
+
+                    <!-- Detail modal starts-->
+                    @include('admin.item.modal.detail-modal')
+                    <!-- Detail modal ends -->
                 </section>
                 <!-- Data list view end -->
 

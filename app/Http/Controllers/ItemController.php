@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ItemRequest;
 use App\Models\Item;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\Exists;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
@@ -30,14 +29,18 @@ class ItemController extends Controller
         return view('admin.item.create', compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(ItemRequest $request)
     {
         $params = $request->all();
         $image = $request->image;
-        $params['image'] = $image->move('app-assets/images/pages/eCommerce/', $image->getClientOriginalName());
+        if ($request->hasfile('image')) {
+            $path = 'public/avatar';
+            $image = Storage::putFile($path, $request->file('image'));
+            $params['image'] = $image;
+        }
         Item::create($params);
 
-        return redirect()->route('items.index');
+        return response()->json(['success' => 'Form is successfully submitted!']);
     }
 
     public function destroy($id)
@@ -48,6 +51,15 @@ class ItemController extends Controller
         return redirect()->route('items.index');
     }
 
+    public function show(Item $item)
+    {
+        $itemData = $item;
+        $itemData['image'] = Storage::url($itemData->image);
+        $route = route('items.show', $itemData->id);
+
+        return response()->json(array('success' => true, 'itemData' => $itemData, 'route' => $route));
+    }
+
     public function edit(Item $item)
     {
         $itemData = $item;
@@ -56,18 +68,32 @@ class ItemController extends Controller
         return response()->json(array('success' => true, 'itemData' => $itemData, 'route' => $route));
     }
 
-    public function update(Request $request)
+    public function update(ItemRequest $request)
     {
-        $item = Item::find($request->id);
-        $params = $request->all();
-        $image = $request->image;
-        if ($request->hasfile('image')) {
-            $path = 'public/avatar';
-            $image = Storage::putFile($path, $request->file('image'));
-            $params['image'] = $image;
-        }
-        $item->update($params);
+        $id = $request->id;
+        if ($id != NULL) {
+            $item = Item::find($id);
+            $params = $request->all();
+            $image = $request->image;
+            if ($request->hasfile('image')) {
+                $path = 'public/avatar';
+                $image = Storage::putFile($path, $request->file('image'));
+                $params['image'] = $image;
+            }
+            $item->update($params);
 
-        return redirect()->route('items.index');
+            return response()->json(['success' => 'Form is successfully submitted!']);
+        } else {
+            $params = $request->all();
+            $image = $request->image;
+            if ($request->hasfile('image')) {
+                $path = 'public/avatar';
+                $image = Storage::putFile($path, $request->file('image'));
+                $params['image'] = $image;
+            }
+            Item::create($params);
+
+            return response()->json(['success' => 'Form is successfully submitted!']);
+        }
     }
 }

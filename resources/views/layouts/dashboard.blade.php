@@ -371,6 +371,7 @@
     <script src="{{ asset('app-assets/js/scripts/datatables/datatable.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/navs/navs.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/ui/data-list-view.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/modal/components-modal.js') }}"></script>
     <!-- END: Page JS-->
 
     <!-- BEGIN: Custom JS-->

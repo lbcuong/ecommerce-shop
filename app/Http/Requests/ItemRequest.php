@@ -29,7 +29,7 @@ class ItemRequest extends FormRequest
             'detail' => 'required',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ];
     }
 }
