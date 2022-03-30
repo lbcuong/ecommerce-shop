@@ -86,6 +86,7 @@ $(document).ready(function () {
         text: "<i class='feather icon-plus'></i> Add New",
         action: function () {
           $(this).removeClass("btn-secondary")
+          $('#header').html('Add Data');
           $(".add-new-data").addClass("show")
           $(".overlay-bg").addClass("show")
         },
@@ -144,14 +145,19 @@ $(document).ready(function () {
       data: {},
       type: 'json',
       success: function (data) {
+        console.log(data);
+        $('#header').html('Edit Data');
         $('.action-edit').attr('action', data.route);
         $.each(data.itemData, function (index, value) {
-          $('input[name=' + index + ']').val(value);
-          if (index == 'detail') {
-            $('textarea[name=' + index + ']').html(value);
-          }
-          if (index == 'category_id') {
-            $('select[name=' + index + ']').val(value);
+          switch (index) {
+            case 'detail':
+              $('textarea[name=' + index + ']').val(value);
+              break;
+            case 'category_id':
+              $('select[name=' + index + ']').val(value);
+              break;
+            default:
+              $('input[name=' + index + ']').val(value);
           }
         });
       }
@@ -161,7 +167,7 @@ $(document).ready(function () {
     $(".overlay-bg").addClass("show");
   });
 
-  // Update data
+  // On Update
   $('#form-item-create').on('submit', function (e) {
     e.preventDefault();
     $.ajaxSetup({
@@ -169,7 +175,6 @@ $(document).ready(function () {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       }
     });
-    let id = $(this).attr("data-id");
     let formData = new FormData(this);
     let url = 'items/update';
     console.log(formData);

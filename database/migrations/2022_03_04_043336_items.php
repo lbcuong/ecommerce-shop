@@ -21,7 +21,7 @@ class Items extends Migration
             $table->string('price');
             $table->integer('quantity');
             $table->longText('detail');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

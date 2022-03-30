@@ -1,21 +1,18 @@
-<div class="add-new-data-sidebar">
-    <div class="overlay-bg"></div>
-    <form method="post" id="form-item-create" enctype="multipart/form-data">
-        <input type="hidden" class="form-control" name="id">
-        <div class="add-new-data">
-            <div class="div mt-2 px-2 d-flex new-data-title justify-content-between">
-                <div>
-                    <h4 class="text-uppercase" id="header"></h4>
-                </div>
-                <div class="hide-data-sidebar">
-                    <i class="feather icon-x"></i>
-                </div>
+<div class="modal fade text-left" id="modal-create-edit-item" tabindex="-1" role="dialog" aria-labelledby="header"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary white">
+                <h5 class="modal-title" name="header" id="header"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="data-items pb-3">
-                <div class="data-fields px-2 mt-3">
+            <form id="form-create-edit-item" enctype="multipart/form-data">
+                <input type="hidden" class="form-control" name="id">
+                <div class="modal-body">
                     <div class="row">
-                        @csrf
-                        <div class="col-md-12">
+                        <div class="col-6 col-sm-6">
                             <div class="form-group">
                                 <label>Name</label>
                                 <div class="controls col-sm-12 data-field-col">
@@ -23,6 +20,8 @@
                                     <span class="text-danger" id="name-input-error"></span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-6 col-sm-6">
                             <div class="form-group">
                                 <label>Category</label>
                                 <div class="controls col-sm-12 data-field-col">
@@ -38,6 +37,10 @@
                                 </div>
                                 <span class="text-danger" id="category-input-error"></span>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 col-sm-6">
                             <div class="form-group">
                                 <label>Price</label>
                                 <div class="controls col-sm-12 data-field-col">
@@ -46,6 +49,8 @@
                                     <span class="text-danger" id="price-input-error"></span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-6 col-sm-6">
                             <div class="form-group">
                                 <label>Quantity</label>
                                 <div class="controls col-sm-12 data-field-col">
@@ -54,6 +59,10 @@
                                     <span class="text-danger" id="quantity-input-error"></span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
                             <div class="form-group">
                                 <label>Detail</label>
                                 <div class="controls col-sm-12 data-field-col">
@@ -61,23 +70,26 @@
                                     <span class="text-danger" id="detail-input-error"></span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 col-sm-6">
                             <div class="form-group">
                                 <label>Image</label>
                                 <div class="controls col-sm-12 data-field-col">
-                                    <input type="file" class="form-control" placeholder="Image" name="image"
-                                        id="image" value="{{ $item->image }}">
+                                    <label class="btn btn-primary cursor-pointer w-100"
+                                        for="image">Upload Image</label>
+                                    <input type="file" name="image" id="image" hidden>
                                     <span class="text-danger" id="image-input-error"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
-                <div class="add-data-btn">
-                    <button class="btn btn-primary" type="submit" id="form-item-submit">Save Data</button>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">Save Data</button>
                 </div>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>

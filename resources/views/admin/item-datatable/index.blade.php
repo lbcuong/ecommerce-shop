@@ -39,7 +39,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <div>
-                                        <span class="btn btn-block btn-primary text-white" data-toggle="modal" data-target="#modal-create-edit-user">
+                                        <span class="btn btn-block btn-primary text-white action-create-item" data-toggle="modal" data-target="#modal-create-edit-item">
                                             <i class='feather icon-plus'></i> New User
                                         </span>
                                     </div>
@@ -61,7 +61,8 @@
     </div>
 
     <!-- Modal starts-->
-    @include('admin.user.modal.create-edit-modal')
+    @include('admin.item-datatable.modal.create-edit-modal')
+    @include('admin.item-datatable.modal.detail-modal')
     <!-- Modal ends -->
 @endsection
 

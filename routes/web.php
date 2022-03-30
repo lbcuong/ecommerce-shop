@@ -6,6 +6,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ItemDataTableController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -57,10 +58,12 @@ Route::group(['middleware' => ['auth', 'role:customer']], function () {
 
 Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'dashboard'], function () {
     Route::get('/ecommerce', [DashboardController::class, 'ecommerce'])->name('dashboards.ecommerce');
+    
+    Route::resource('itemsDatatable', ItemDataTableController::class);
+
     Route::resource('items', ItemController::class);
     Route::post('/items/edit/{item}', [ItemController::class, 'edit'])->name('items.edit');
     Route::post('/items/show/{item}', [ItemController::class, 'show'])->name('items.show');
     Route::post('/items/update', [ItemController::class, 'update'])->name('items.update');
-
     Route::resource('users', UserController::class);
 });
