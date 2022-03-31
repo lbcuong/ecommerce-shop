@@ -38,10 +38,18 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <div>
-                                        <span class="btn btn-block btn-primary text-white action-create-item" data-toggle="modal" data-target="#modal-create-edit-item">
-                                            <i class='feather icon-plus'></i> New User
-                                        </span>
+                                    <div class="btn-toolbar">
+                                        <div class="btn-group mr-1">
+                                            <span class="btn btn-block btn-primary text-white action-create-item"
+                                                data-toggle="modal" data-target="#modal-create-edit-item">
+                                                <i class='feather icon-plus'></i> New User
+                                            </span>
+                                        </div>
+                                        <div class="btn-group">
+                                            <a class="btn btn-primary text-white destroy-multiple disabled" data-route="{{ route('itemsDatatable.destroyMultiple') }}">
+                                                <i class="feather icon-trash"></i> Remove Items
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-content">

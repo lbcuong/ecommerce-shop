@@ -60,6 +60,8 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'dashboard'], 
     Route::get('/ecommerce', [DashboardController::class, 'ecommerce'])->name('dashboards.ecommerce');
     
     Route::resource('itemsDatatable', ItemDataTableController::class);
+    Route::post('/itemsDatatable/update/{id}', [ItemDataTableController::class, 'update'])->name('itemsDatatable.update');
+    Route::post('/itemsDatatable/destroy-multiple', [ItemDataTableController::class, 'destroyMultiple'])->name('itemsDatatable.destroyMultiple');
 
     Route::resource('items', ItemController::class);
     Route::post('/items/edit/{item}', [ItemController::class, 'edit'])->name('items.edit');

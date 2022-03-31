@@ -28,6 +28,12 @@ class ItemsDataTable extends DataTable
                         <span class="action-edit-item" data-id="' . $item->id . '"><i class="feather icon-edit"></i></span>
                         <span class="action-delete-item" data-id="' . $item->id . '"><i class="feather icon-trash-2"></i></span>';
             })
+            ->editColumn('', function ($item) {
+                return '<div class="custom-control custom-checkbox">
+                            <input type="checkbox" data-id="' . $item->id . '" id="items-checkbox-' . $item->id . '" class="custom-control-input items-checkbox">
+                            <label class="custom-control-label" for="items-checkbox-' . $item->id . '"></label>
+                        </div>';
+            })
             ->editColumn('image', function ($item) {
                 $urlImage = Storage::url($item->image);
                 return '<img src="' . $urlImage . '" alt="Image" width=200>';
@@ -35,7 +41,7 @@ class ItemsDataTable extends DataTable
             ->editColumn('category_id', function ($item) {
                 return $item->category->name;
             })
-            ->rawColumns(['category_id', 'image', 'action']);
+            ->rawColumns(['category_id', 'image', 'action', '']);
     }
 
     /**
@@ -79,7 +85,11 @@ class ItemsDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('id')->visible(false),
+            Column::make('id')->visible(false)->searchable(false),
+            Column::make('')->searchable(false)->orderable(false)->title('<div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" id="items-checkbox-master" class="custom-control-input">
+                                                                            <label class="custom-control-label" for="items-checkbox-master"></label>
+                                                                          </div>'),
             Column::make('name'),
             Column::make('image'),
             Column::make('category_id')->title('Category'),

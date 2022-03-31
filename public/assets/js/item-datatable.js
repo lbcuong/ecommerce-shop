@@ -79,14 +79,12 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
         $.ajax({
             url: url + id + '/' + 'edit',
             type: "GET",
             data: { id: id },
             dataType: 'json',
             success: function (data) {
-                console.log(data);
                 $('#header').html('Edit Data');
                 $('.action-edit').attr('action', data.route);
                 $('#modal-create-edit-item').modal("show");
@@ -109,7 +107,7 @@ $(document).ready(function () {
         $(".overlay-bg").addClass("show");
     });
 
-    // On store
+    // On store or update
     $('#form-create-edit-item').on('submit', function (e) {
         e.preventDefault();
         $.ajaxSetup({
@@ -117,51 +115,20 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        let id = $(this).find('input[name="id"]').val();
         let formData = new FormData(this);
         let url = 'itemsDatatable/';
         console.log(formData);
+        console.log(id);
         $.ajax({
             type: 'POST',
-            url: url,
+            url: (id.length !== 0) ? url + 'update/' + id : url,
             data: formData,
             dataType: 'json',
             contentType: false,
             processData: false,
             success: function (response) {
-                console.log(response);
-            },
-            error: function (response) {
-                $('#name-input-error').text(response.responseJSON.errors.name);
-                $('#category-input-error').text(response.responseJSON.errors.category_id);
-                $('#price-input-error').text(response.responseJSON.errors.price);
-                $('#quantity-input-error').text(response.responseJSON.errors.quantity);
-                $('#detail-input-error').text(response.responseJSON.errors.detail);
-                $('#image-input-error').text(response.responseJSON.errors.image);
-            }
-        });
-    });
-
-    // On update
-    $('#form-create-edit-item').on('submit', function (e) {
-        e.preventDefault();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        let id = $(this).attr("data-id");
-        let formData = new FormData(this);
-        let url = 'itemsDatatable/';
-        console.log(formData);
-        $.ajax({
-            type: 'PUT',
-            url: url + id,
-            data: formData,
-            dataType: 'json',
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                console.log(response);
+                location.reload();
             },
             error: function (response) {
                 $('#name-input-error').text(response.responseJSON.errors.name);
@@ -212,6 +179,84 @@ $(document).ready(function () {
                             type: "DELETE",
                             url: url + id,
                             data: { id: id },
+                            dataType: 'json',
+                            success: function (response) {
+                                location.reload();
+                            },
+                            error: function (response) {
+                                console.log(response);
+                            }
+                        });
+                    }
+                });
+            }
+        })
+    });
+
+    // Check all checkbox
+    $('#items-checkbox-master').on('click', function (e) {
+        $(".items-checkbox").prop('checked', $(this).prop('checked'));
+        if ($(this).prop('checked') == true) {
+            $('.destroy-multiple').removeClass('disabled');
+        }
+        else {
+            $('.destroy-multiple').addClass('disabled');
+        }
+    });
+
+    // Check each checkbox
+    $('body').on('click', '.items-checkbox', function (e) {
+        if ($('input.items-checkbox[type="checkbox"]:checked').length > 0) {
+            $('.destroy-multiple').removeClass('disabled');
+        }
+        else {
+            $('.destroy-multiple').addClass('disabled');
+        }
+    });
+
+    // On destroy multiple
+    $('.destroy-multiple').on('click', function (e) {
+        e.preventDefault();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        let ids = [];
+        $(".items-checkbox:checked").each(function () {
+            ids.push($(this).attr('data-id'));
+        });
+
+        let idList = ids.join(",");
+        let url = $(this).attr("data-route")
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            confirmButtonClass: 'btn btn-primary',
+            cancelButtonClass: 'btn btn-danger ml-1',
+            buttonsStyling: false,
+        }).then(function (result) {
+            if (result.value) {
+                Swal.fire(
+                    {
+                        type: "success",
+                        title: 'Deleted!',
+                        text: 'Your data has been deleted.',
+                        confirmButtonClass: 'btn btn-success',
+                    }
+                ).then(function (result) {      // submit after click OK ( customize )
+                    if (result.value) {
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            data: { 'ids': idList },
                             dataType: 'json',
                             success: function (response) {
                                 location.reload();

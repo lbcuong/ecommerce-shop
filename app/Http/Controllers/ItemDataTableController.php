@@ -39,7 +39,7 @@ class ItemDataTableController extends Controller
         }
         Item::create($params);
 
-        return response()->json(['success' => 'Form is successfully submitted!']);
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -83,13 +83,20 @@ class ItemDataTableController extends Controller
         }
         $item->update($params);
 
-        return response()->json(['success' => 'Form is successfully submitted!']);
+        return response()->json(['success' => true]);
     }
 
     public function destroy($id)
     {
         $item = Item::where('id', $id)->delete();
 
-        return Response()->json($item);
+        return response()->json($item);
+    }
+
+    public function destroyMultiple(Request $request)
+    {
+        $ids = $request->ids;
+        $item = Item::whereIn('id', explode(",", $ids))->delete();
+        return response()->json($item);
     }
 }
