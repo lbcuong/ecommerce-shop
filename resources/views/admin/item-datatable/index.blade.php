@@ -42,7 +42,7 @@
                                         <div class="btn-group mr-1">
                                             <span class="btn btn-block btn-primary text-white action-create-item"
                                                 data-toggle="modal" data-target="#modal-create-edit-item">
-                                                <i class='feather icon-plus'></i> New User
+                                                <i class='feather icon-plus'></i> New Items
                                             </span>
                                         </div>
                                         <div class="btn-group">

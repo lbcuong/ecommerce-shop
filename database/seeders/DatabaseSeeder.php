@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CategoryNestedSet;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PaymentMethodSeeder::class);
         $this->call(PermissionAndRoleSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(CategoryNestedSet::class);
     }
 }

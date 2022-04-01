@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemDataTableController;
@@ -67,5 +68,10 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'dashboard'], 
     Route::post('/items/edit/{item}', [ItemController::class, 'edit'])->name('items.edit');
     Route::post('/items/show/{item}', [ItemController::class, 'show'])->name('items.show');
     Route::post('/items/update', [ItemController::class, 'update'])->name('items.update');
+
     Route::resource('users', UserController::class);
+    Route::post('/users/update/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::post('/users/destroy-multiple', [UserController::class, 'destroyMultiple'])->name('users.destroyMultiple');
+
+    Route::resource('categories', CategoryController::class);
 });

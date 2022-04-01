@@ -301,6 +301,8 @@
                 </li>
                 <li class="nav-item {{ (request()->routeIs('itemsDatatable.index')) ? 'active' : '' }}"><a href="{{route('itemsDatatable.index')}}"><i class="feather icon-droplet"></i><span class="menu-title" data-i18n="Colors">Items Datatable</span></a>
                 </li>
+                <li class="nav-item {{ (request()->routeIs('categories.index')) ? 'active' : '' }}"><a href="{{route('categories.index')}}"><i class="feather icon-droplet"></i><span class="menu-title" data-i18n="Colors">Categories</span></a>
+                </li>
             </ul>
         </div>
     </div>
@@ -379,6 +381,7 @@
     <!-- BEGIN: Custom JS-->
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <script src="{{ asset('assets/js/item-datatable.js') }}"></script>
+    <script src="{{ asset('assets/js/user.js') }}"></script>
     <!-- END: Custom JS-->
     @stack('scripts')
 </body>

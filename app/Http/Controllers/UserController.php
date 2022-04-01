@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\DataTables\UsersDataTable;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -24,21 +26,75 @@ class UserController extends Controller
         return view('admin.user.create');
     }
 
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
         $params = $request->all();
-        $image = $request->image;
-        $params['image'] = $image->move('app-assets/images/pages/eCommerce/', $image->getClientOriginalName());
+        $password = Hash::make($request->password);
+        $params['password'] = $password;
         User::create($params);
+        //$role = $request->role;
+        //dd($role);
+        //$user->assignRole('admin');
 
-        return redirect()->route('items.index');
+        return response()->json(['success' => true]);
+    }
+
+        /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $user = User::find($id);
+        $image = Storage::disk('local')->exists($user->image);
+        if ($image) {
+            $user['image'] = Storage::url($user->image);
+        } else {
+            $user['image'] = Storage::url('public/user-avatars/user.png');
+        }
+        
+        $route = route('users.show', $user->id);
+
+        return response()->json(array('success' => true, 'user' => $user, 'route' => $route));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $user = User::find($id);
+        $route = route('users.edit', $user->id);
+
+        return response()->json(array('success' => true, 'user' => $user, 'route' => $route));
+    }
+
+    public function update(UserRequest $request, $id)
+    {
+        $User = User::find($id);
+        $password = Hash::make($request->password);
+        $params['password'] = $password;
+        $User->update($params);
+
+        return response()->json(['success' => true]);
     }
 
     public function destroy($id)
     {
-        $item = User::find($id);
-        $item->delete();
+        $User = User::where('id', $id)->delete();
 
-        return redirect()->route('users.index');
+        return response()->json($User);
+    }
+
+    public function destroyMultiple(Request $request)
+    {
+        $ids = $request->ids;
+        $User = User::whereIn('id', explode(",", $ids))->delete();
+        return response()->json($User);
     }
 }

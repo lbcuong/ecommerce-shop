@@ -33,7 +33,7 @@ class ItemDataTableController extends Controller
         $params = $request->all();
         if ($request->hasfile('image')) {
             $image = $request->image;
-            $path = 'public/avatar';
+            $path = 'public/item-images';
             $image = Storage::putFile($path, $request->file('image'));
             $params['image'] = $image;
         }
@@ -77,7 +77,7 @@ class ItemDataTableController extends Controller
         $params = $request->all();
         if ($request->hasfile('image')) {
             $image = $request->image;
-            $path = 'public/avatar';
+            $path = 'public/item-images';
             $image = Storage::putFile($path, $request->file('image'));
             $params['image'] = $image;
         }

@@ -22,9 +22,17 @@ class UsersDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addColumn('action', function ($user) {
-                return '<a class="managing text-decoration-none mr-2" href="' . route('users.edit', $user->id) . '"><i class="feather icon-edit"></i></a>
-                <a class="managing text-decoration-none" href="' . route('users.destroy', $user->id) . '"><i class="feather icon-trash-2"></i></a>';
-            });
+                return '<span class="action-detail-user" data-id="' . $user->id . '"><i class="feather icon-file-text"></i></span>
+                        <span class="action-edit-user" data-id="' . $user->id . '"><i class="feather icon-edit"></i></span>
+                        <span class="action-delete-user" data-id="' . $user->id . '"><i class="feather icon-trash-2"></i></span>';
+            })
+            ->editColumn('', function ($user) {
+                return '<div class="custom-control custom-checkbox">
+                            <input type="checkbox" data-id="' . $user->id . '" id="users-checkbox-' . $user->id . '" class="custom-control-input users-checkbox">
+                            <label class="custom-control-label" for="users-checkbox-' . $user->id . '"></label>
+                        </div>';
+            })
+            ->rawColumns(['action', '']);
     }
 
     /**
@@ -50,7 +58,7 @@ class UsersDataTable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
-            ->orderBy(1);
+            ->orderBy(0, 'desc');
         //->buttons(
         //    Button::make('create')->action("window.location = '" . route('users.create') . "';"),
         //    Button::make('export'),
@@ -68,9 +76,14 @@ class UsersDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::make('id'),
+            Column::make('id')->visible(false)->searchable(false),
+            Column::make('')->searchable(false)->orderable(false)->title('<div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" id="users-checkbox-master" class="custom-control-input">
+                                                                            <label class="custom-control-label" for="users-checkbox-master"></label>
+                                                                          </div>'),
             Column::make('name'),
             Column::make('email'),
+            Column::make('phone'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

@@ -38,10 +38,18 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <div>
-                                        <span class="btn btn-block btn-primary text-white" data-toggle="modal" data-target="#modal-create-edit-user">
-                                            <i class='feather icon-plus'></i> New User
-                                        </span>
+                                    <div class="btn-toolbar">
+                                        <div class="btn-group mr-1">
+                                            <span class="btn btn-block btn-primary text-white action-create-user"
+                                                data-toggle="modal" data-target="#modal-create-edit-user">
+                                                <i class='feather icon-plus'></i> New User
+                                            </span>
+                                        </div>
+                                        <div class="btn-group">
+                                            <a class="btn btn-primary text-white destroy-multiple disabled" data-route="{{ route('users.destroyMultiple') }}">
+                                                <i class="feather icon-trash"></i> Remove Users
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-content">
@@ -62,6 +70,7 @@
 
     <!-- Modal starts-->
     @include('admin.user.modal.create-edit-modal')
+    @include('admin.user.modal.detail-modal')
     <!-- Modal ends -->
 @endsection
 

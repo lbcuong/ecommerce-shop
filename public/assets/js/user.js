@@ -1,43 +1,33 @@
 $(document).ready(function () {
     "use strict";
 
-    $("#form-create-edit-item #name").keyup(function () {
-        $("#form-create-edit-item #name-input-error").html("")
+    $("#form-create-edit-user #name").keyup(function () {
+        $("#form-create-edit-user #name-input-error").html("")
     });
-    $("#form-create-edit-item #category_id").keyup(function () {
-        $("#form-create-edit-item #category_id-input-error").html("")
+    $("#form-create-edit-user #category_id").keyup(function () {
+        $("#form-create-edit-user #email-input-error").html("")
     });
-    $("#form-create-edit-item #price").keyup(function () {
-        $("#form-create-edit-item #price-input-error").html("")
+    $("#form-create-edit-user #password").keyup(function () {
+        $("#form-create-edit-user #password-input-error").html("")
     });
-    $("#form-create-edit-item #quantity").keyup(function () {
-        $("#form-create-edit-item #quantity-input-error").html("")
-    });
-    $("#form-create-edit-item #detail").keyup(function () {
-        $("#form-create-edit-item #detail-input-error").html("")
-    });
-    $("#form-create-edit-item #image").on('click', function () {
-        if ($("#form-create-edit-item #image").val() == '') {
-            $("#form-create-edit-item #image-input-error").html("")
-        }
+    $("#form-create-edit-user #confirm-password").keyup(function () {
+        $("#form-create-edit-user #confirm-password-input-error").html("")
     });
 
-    $('.action-create-item').on("click", function (e) {
+    $('.action-create-user').on("click", function (e) {
         e.stopPropagation();
         e.preventDefault();
-        $('#modal-create-edit-item').modal("show");
-        $('#form-create-edit-item').closest('form').find("input, textarea").val("");
-        $('#form-create-edit-item').closest('form').find("select").val(4);
-        $('#form-create-edit-item').closest('form').find("span").html("");
+        $('#modal-create-edit-user').modal("show");
+        $('#form-create-edit-user').closest('form').find("input").val("");
         $('#header').html('Add Data');
     })
 
     // On detail
-    $('body').on("click", ".action-detail-item", function (e) {
+    $('body').on("click", ".action-detail-user", function (e) {
         e.stopPropagation();
         e.preventDefault();
         let id = $(this).attr("data-id");
-        let url = 'itemsDatatable/';
+        let url = 'users/';
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -51,20 +41,18 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (data) {
                 $('.action-detail').attr('action', data.route);
-                $('#modal-detail-item').modal("show");
-                $.each(data.itemData, function (index, value) {
+                $('#modal-detail-user').modal("show");
+                $.each(data.user, function (index, value) {
                     switch (index) {
                         case 'image':
-                            $('.img-thumbnail').attr('src', value);
-                            break;
-                        case 'detail':
-                            $('p[name=' + index + ']').html(value);
+                            $('#user-avatar').attr('src', value);
                             break;
                         case 'name':
-                            $('h5[name=' + index + ']').html(value + "'s detail");
+                            $('h5[name=' + index + ']').html(value + "'s details");
+                            $('p[name=' + index + ']').html(value);
                             break;
                         default:
-                            $('input[name=' + index + ']').val(value);
+                            $('p[name=' + index + ']').html(value);
                     }
                 });
             }
@@ -72,12 +60,12 @@ $(document).ready(function () {
     })
 
     // On Edit
-    $('body').on("click", ".action-edit-item", function (e) {
+    $('body').on("click", ".action-edit-user", function (e) {
         e.stopPropagation();
         e.preventDefault();
-        $('#form-create-edit-item').closest('form').find("span").html("");
+        $('#form-create-edit-user').closest('form').find("span").html("");
         let id = $(this).attr("data-id");
-        let url = 'itemsDatatable/';
+        let url = 'users/';
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -91,25 +79,16 @@ $(document).ready(function () {
             success: function (data) {
                 $('#header').html('Edit Data');
                 $('.action-edit').attr('action', data.route);
-                $('#modal-create-edit-item').modal("show");
-                $.each(data.itemData, function (index, value) {
-                    switch (index) {
-                        case 'detail':
-                            $('textarea[name=' + index + ']').val(value);
-                            break;
-                        case 'category_id':
-                            $('select[name=' + index + ']').val(value);
-                            break;
-                        default:
-                            $('input[name=' + index + ']').val(value);
-                    }
+                $('#modal-create-edit-user').modal("show");
+                $.each(data.user, function (index, value) {
+                    $('input[name=' + index + ']').val(value);
                 });
             }
         });
     });
 
     // On store or update
-    $('#form-create-edit-item').on('submit', function (e) {
+    $('#form-create-edit-user').on('submit', function (e) {
         e.preventDefault();
         $.ajaxSetup({
             headers: {
@@ -118,9 +97,9 @@ $(document).ready(function () {
         });
         let id = $(this).find('input[name="id"]').val();
         let formData = new FormData(this);
-        let url = 'itemsDatatable/';
-        console.log(formData);
-        console.log(id);
+        let r = $(this).find('input[name="role"]').val();
+        console.log(r);
+        let url = 'users/';
         $.ajax({
             type: 'POST',
             url: (id.length !== 0) ? url + 'update/' + id : url,
@@ -129,21 +108,19 @@ $(document).ready(function () {
             contentType: false,
             processData: false,
             success: function (response) {
-                location.reload();
+                console.log(response);
             },
             error: function (response) {
                 $('#name-input-error').text(response.responseJSON.errors.name);
-                $('#category-input-error').text(response.responseJSON.errors.category_id);
-                $('#price-input-error').text(response.responseJSON.errors.price);
-                $('#quantity-input-error').text(response.responseJSON.errors.quantity);
-                $('#detail-input-error').text(response.responseJSON.errors.detail);
-                $('#image-input-error').text(response.responseJSON.errors.image);
+                $('#email-input-error').text(response.responseJSON.errors.email);
+                $('#password-input-error').text(response.responseJSON.errors.password);
+                $('#confirm-password-input-error').text(response.responseJSON.errors.confirm_password);
             }
         });
     });
 
     // On destroy
-    $('body').on('click', '.action-delete-item', function (e) {
+    $('body').on('click', '.action-delete-user', function (e) {
         e.preventDefault();
         $.ajaxSetup({
             headers: {
@@ -152,7 +129,7 @@ $(document).ready(function () {
         });
 
         let id = $(this).attr("data-id");
-        let url = 'itemsDatatable/';
+        let url = 'users/';
 
         Swal.fire({
             title: 'Are you sure?',
@@ -195,8 +172,8 @@ $(document).ready(function () {
     });
 
     // Check all checkbox
-    $('#items-checkbox-master').on('click', function (e) {
-        $(".items-checkbox").prop('checked', $(this).prop('checked'));
+    $('#users-checkbox-master').on('click', function (e) {
+        $(".users-checkbox").prop('checked', $(this).prop('checked'));
         if ($(this).prop('checked') == true) {
             $('.destroy-multiple').removeClass('disabled');
         }
@@ -206,8 +183,8 @@ $(document).ready(function () {
     });
 
     // Check each checkbox
-    $('body').on('click', '.items-checkbox', function (e) {
-        if ($('input.items-checkbox[type="checkbox"]:checked').length > 0) {
+    $('body').on('click', '.users-checkbox', function (e) {
+        if ($('input.users-checkbox[type="checkbox"]:checked').length > 0) {
             $('.destroy-multiple').removeClass('disabled');
         }
         else {
@@ -225,7 +202,7 @@ $(document).ready(function () {
         });
 
         let ids = [];
-        $(".items-checkbox:checked").each(function () {
+        $(".users-checkbox:checked").each(function () {
             ids.push($(this).attr('data-id'));
         });
 
@@ -270,17 +247,6 @@ $(document).ready(function () {
                 });
             }
         })
-    });
-
-
-    // $('.nested-set').change(function(e){
-    //   let id = $(this).find(':selected').val();
-    //   console.log(id);
-    // }) 
-
-    $('.js-example-basic-multiple').select2({
-        placeholder: "Select",
-        allowClear: true
     });
 
 });
