@@ -382,6 +382,7 @@
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <script src="{{ asset('assets/js/item-datatable.js') }}"></script>
     <script src="{{ asset('assets/js/user.js') }}"></script>
+    <script src="{{ asset('assets/js/js.js') }}"></script>
     <!-- END: Custom JS-->
     @stack('scripts')
 </body>
