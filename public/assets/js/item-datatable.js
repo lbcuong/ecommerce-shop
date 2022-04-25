@@ -132,12 +132,10 @@ $(document).ready(function () {
                 location.reload();
             },
             error: function (response) {
-                $('#name-input-error').text(response.responseJSON.errors.name);
-                $('#category-input-error').text(response.responseJSON.errors.category_id);
-                $('#price-input-error').text(response.responseJSON.errors.price);
-                $('#quantity-input-error').text(response.responseJSON.errors.quantity);
-                $('#detail-input-error').text(response.responseJSON.errors.detail);
-                $('#image-input-error').text(response.responseJSON.errors.image);
+                var responses = response.responseJSON.errors;
+                $.each(responses, function (key, value) {
+                    $('#' + key + '-input-error').text(value);
+                });
             }
         });
     });
