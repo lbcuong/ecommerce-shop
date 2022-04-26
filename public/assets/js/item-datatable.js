@@ -118,12 +118,10 @@ $(document).ready(function () {
         });
         let id = $(this).find('input[name="id"]').val();
         let formData = new FormData(this);
-        let url = 'itemsDatatable/';
-        console.log(formData);
-        console.log(id);
+        let url = (id.length !== 0) ? window.location.pathname + 'update/' + id : window.location.pathname;
         $.ajax({
             type: 'POST',
-            url: (id.length !== 0) ? url + 'update/' + id : url,
+            url: url,
             data: formData,
             dataType: 'json',
             contentType: false,
@@ -150,7 +148,7 @@ $(document).ready(function () {
         });
 
         let id = $(this).attr("data-id");
-        let url = 'itemsDatatable/';
+        let url = window.location.pathname + '/' + id;
 
         Swal.fire({
             title: 'Are you sure?',
@@ -176,7 +174,7 @@ $(document).ready(function () {
                     if (result.value) {
                         $.ajax({
                             type: "DELETE",
-                            url: url + id,
+                            url: url,
                             data: { id: id },
                             dataType: 'json',
                             success: function (response) {
@@ -278,6 +276,7 @@ $(document).ready(function () {
 
     $('.js-example-basic-multiple').select2({
         placeholder: "Select",
+        dropdownParent: $("#modal-create-edit-item"),
         allowClear: true
     });
 

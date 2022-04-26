@@ -6,6 +6,8 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\IssueController;
+use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ItemDataTableController;
 use Illuminate\Support\Facades\Auth;
@@ -74,4 +76,5 @@ Route::group(['middleware' => ['auth', 'role:admin'], 'prefix' => 'dashboard'], 
     Route::post('/users/destroy-multiple', [UserController::class, 'destroyMultiple'])->name('users.destroyMultiple');
 
     Route::resource('categories', CategoryController::class);
+    Route::resource('issues', IssueController::class);
 });

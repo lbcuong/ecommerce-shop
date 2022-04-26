@@ -303,6 +303,8 @@
                 </li>
                 <li class="nav-item {{ (request()->routeIs('categories.index')) ? 'active' : '' }}"><a href="{{route('categories.index')}}"><i class="feather icon-droplet"></i><span class="menu-title" data-i18n="Colors">Categories</span></a>
                 </li>
+                <li class="nav-item {{ (request()->routeIs('issues.index')) ? 'active' : '' }}"><a href="{{route('issues.index')}}"><i class="feather icon-droplet"></i><span class="menu-title" data-i18n="Colors">Issues</span></a>
+                </li>
             </ul>
         </div>
     </div>
