@@ -25,7 +25,7 @@
                             <div class="form-group">
                                 <label>Parent Category</label>
                                 <div class="controls col-sm-12 data-field-col">
-                                    <select class="form-control js-example-basic-multiple" name="categories_id[]" id="categories_id" multiple="multiple">
+                                    <select class="select2 form-control" name="categories_id[]" id="categories_id" multiple="multiple">
                                         {{ $traverseSelect($categories) }}
                                     </select>
                                 </div>

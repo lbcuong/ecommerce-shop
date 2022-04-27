@@ -4,33 +4,6 @@
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
-            <div class="content-header row">
-                <div class="content-header-left col-md-9 col-12 mb-2">
-                    <div class="row breadcrumbs-top">
-                        <div class="col-12">
-                            <h2 class="content-header-title float-left mb-0">Users</h2>
-                            <div class="breadcrumb-wrapper col-12">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item active"><a href="index.html">User</a>
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
-                    <div class="form-group breadcrum-right">
-                        <div class="dropdown">
-                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
-                                    class="feather icon-settings"></i></button>
-                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Chat</a><a
-                                    class="dropdown-item" href="#">Email</a><a class="dropdown-item" href="#">Calendar</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="content-body">
                 <!-- Zero configuration table -->
                 <section>
@@ -42,18 +15,42 @@
                                         <div class="btn-group mr-1">
                                             <span class="btn btn-block btn-primary text-white action-create-item"
                                                 data-toggle="modal" data-target="#modal-create-edit-item">
-                                                <i class='feather icon-plus'></i> New Items
+                                                <i class='feather icon-plus'></i> New Issue
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-content">
-                                    @foreach ($issues as $issue)
-                                        <p>Name: {{ $issue->name }} - Category: @foreach ($issue->categories as $category) 
-                                                                                    {{ $category->name }}{{ ($loop->last ? '' : ', ') }}
-                                                                                @endforeach
-                                        </p>
-                                    @endforeach
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Categories</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($issues as $issue)
+                                                    <tr>
+                                                        <th>{{ $issue->name }}</th>
+                                                        <td>
+                                                            @foreach ($issue->categories as $category)
+                                                                {{ $category->name }}{{ $loop->last ? '' : ', ' }}
+                                                            @endforeach
+                                                        </td>
+                                                        <td>
+                                                            <span class="action-delete-item" data-id="{{ $issue->id }}"><i class="feather icon-trash-2"></i></span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="action-edit-item" data-id="{{ $issue->id }}"><i class="feather icon-edit"></i></span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

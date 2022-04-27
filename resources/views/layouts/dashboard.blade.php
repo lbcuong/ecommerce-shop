@@ -374,6 +374,7 @@
     <script src="{{ asset('app-assets/js/scripts/extensions/sweet-alerts.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/forms/number-input.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/forms/validation/form-validation.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts/forms/select/form-select2.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/datatables/datatable.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/navs/navs.js') }}"></script>
     <script src="{{ asset('app-assets/js/scripts/ui/data-list-view.js') }}"></script>

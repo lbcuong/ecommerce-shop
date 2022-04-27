@@ -267,17 +267,4 @@ $(document).ready(function () {
             }
         })
     });
-
-
-    // $('.nested-set').change(function(e){
-    //   let id = $(this).find(':selected').val();
-    //   console.log(id);
-    // }) 
-
-    $('.js-example-basic-multiple').select2({
-        placeholder: "Select",
-        dropdownParent: $("#modal-create-edit-item"),
-        allowClear: true
-    });
-
 });

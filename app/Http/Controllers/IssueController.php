@@ -26,10 +26,18 @@ class IssueController extends Controller
     public function store(IssueRequest $request)
     {
         $attributes = $request->all();
-        //dd($attributes['categories_id']);
-        $data = Issue::create($attributes);
-        $issue = Issue::find($data->id);
-        $issue->categories()->attach($attributes['categories_id']);
+        $newRecord = Issue::create($attributes);
+        $record = Issue::find($newRecord->id);
+        $record->categories()->attach($attributes['categories_id']);
+        return response()->json(['success' => 'Form is successfully submitted!']);
+    }
+
+    public function destroy($id)
+    {
+        $record = Issue::find($id);
+        $record->delete();
+        $record->categories()->detach();
+
         return response()->json(['success' => 'Form is successfully submitted!']);
     }
 }
