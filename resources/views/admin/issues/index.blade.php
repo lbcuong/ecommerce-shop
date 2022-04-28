@@ -44,7 +44,7 @@
                                                             <span class="action-delete-item" data-id="{{ $issue->id }}"><i class="feather icon-trash-2"></i></span>
                                                         </td>
                                                         <td>
-                                                            <span class="action-edit-item" data-id="{{ $issue->id }}"><i class="feather icon-edit"></i></span>
+                                                            @comments(['model' => $issue])
                                                         </td>
                                                     </tr>
                                                 @endforeach

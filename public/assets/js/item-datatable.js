@@ -118,7 +118,7 @@ $(document).ready(function () {
         });
         let id = $(this).find('input[name="id"]').val();
         let formData = new FormData(this);
-        let url = (id.length !== 0) ? window.location.pathname + 'update/' + id : window.location.pathname;
+        let url = (id.length !== 0) ? window.location.pathname + '/' + 'update' + '/' + id : window.location.pathname;
         $.ajax({
             type: 'POST',
             url: url,
