@@ -5,42 +5,30 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ItemRequest;
 use App\Models\Item;
 use App\Models\Category;
-use Illuminate\Http\Request;
+use App\Repositories\ItemRepository;
 use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
+    protected $items, $categories;
+    public function __construct(){
+        $this->items = new Item();
+        $this->categories = new Category();
+    }
+    
     public function index()
     {
-        $items = Item::with('category')
-            ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
-            ->orderBy('id', 'DESC')
-            ->get();
-
-        $categories = Category::with('children')->where('parent_id', '=', NULL)->select('id', 'name')->get();
-
-        return view('admin.item.index', compact('items', 'categories'));
+        return view('admin.item.index', ['items' => $this->items->getItems(), 'categories' => $this->categories->getCategories()]);
     }
 
     public function create()
     {
-        $categories = Category::with('children')->where('parent_id', '=', NULL)->select('id', 'name')->get();
-
-        return view('admin.item.create', compact('categories'));
+        return view('admin.item.create', ['categories' => $this->categories->getCategories()]);
     }
 
-    public function store(ItemRequest $request)
+    public function store(ItemRequest $request, ItemRepository $itemRepository)
     {
-        $params = $request->all();
-        $image = $request->image;
-        if ($request->hasfile('image')) {
-            $path = 'public/avatar';
-            $image = Storage::putFile($path, $request->file('image'));
-            $params['image'] = $image;
-        }
-        Item::create($params);
-
-        return response()->json(['success' => 'Form is successfully submitted!']);
+        return response()->json(['record' => $itemRepository->create($request), 'success' => true]);
     }
 
     public function destroy($id)

@@ -12,11 +12,16 @@ class Category extends Model
 
     public function children()
     {
-        return $this->hasMany(Category::class, 'parent_id')->with('children');
+        return $this->hasMany(Category::class, 'parent_id');
     }
 
     public function items()
     {
         return $this->hasMany(Item::class, 'category_id');
+    }
+
+    public function getCategories()
+    {
+        return $this->with('children')->where('parent_id', '=', NULL)->select('id', 'name')->get();
     }
 }

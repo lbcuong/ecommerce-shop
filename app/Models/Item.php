@@ -14,4 +14,12 @@ class Item extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function getItems()
+    {
+        return $this->with('category')
+            ->select('id', 'name', 'category_id', 'price', 'quantity', 'detail', 'image')
+            ->orderBy('id', 'DESC')
+            ->get();
+    }
 }

@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Ho_Chi_Minh',
 
     /*
     |--------------------------------------------------------------------------
@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         \Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        App\Providers\HelperServiceProvider::class,
 
         /*
          * Package Service Providers...

@@ -64,8 +64,7 @@
                             <div class="form-group">
                                 <label>Image</label>
                                 <div class="controls col-sm-12 data-field-col">
-                                    <input type="file" class="form-control" placeholder="Image" name="image"
-                                        id="image" value="{{ $item->image }}">
+                                    <input type="file" class="form-control" placeholder="Image" name="image" id="image">
                                     <span class="text-danger" id="image-input-error"></span>
                                 </div>
                             </div>
