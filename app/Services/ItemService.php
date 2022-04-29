@@ -24,6 +24,15 @@ class ItemService
         $this->itemRepository = $itemRepository;
     }
 
+    public function create($request)
+    {
+        // $record = $request->all();
+        // $record['image'] = $this->itemService->handleUploadedImage($request->image);
+        // $record->save();
+// 
+        // return $record;
+    }
+
     public function handleUploadedImage($request)
     {
         return $request->hasfile('image') ? uploadFile($this->path, $request->file('image')) : null;

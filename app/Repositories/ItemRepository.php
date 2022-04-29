@@ -24,10 +24,11 @@ class ItemRepository
 
     public function create($request)
     {
-        $record = $request->all();
-        $record['image'] = $this->itemService->handleUploadedImage($request->image);
-        $record->save();
-
-        return $record;
+        return $this->item->create($request);
+        // $record = $request->all();
+        // $record['image'] = $this->itemService->handleUploadedImage($request->image);
+        // $record->save();
+// 
+        // return $record;
     }
 }
