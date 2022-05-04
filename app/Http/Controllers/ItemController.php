@@ -26,9 +26,9 @@ class ItemController extends Controller
         return view('admin.item.create', ['categories' => $this->categories->getCategories()]);
     }
 
-    public function store(ItemRequest $request, ItemRepository $itemRepository)
+    public function store(ItemRequest $request)
     {
-        return response()->json(['record' => $itemRepository->create($request), 'success' => true]);
+        return response()->json(['record' => $this->itemRepository->saveRecord($request), 'success' => true]);
     }
 
     public function destroy($id)

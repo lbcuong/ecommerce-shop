@@ -22,13 +22,12 @@ class ItemRepository
         $this->item = $item;
     }
 
-    public function create($request)
+    public function save($request)
     {
-        return $this->item->create($request);
-        // $record = $request->all();
-        // $record['image'] = $this->itemService->handleUploadedImage($request->image);
-        // $record->save();
-// 
-        // return $record;
+        $record = $request->all();
+        $record['image'] = $this->itemService->handleUploadedImage($request->image);
+        $record->save();
+
+        return $record;
     }
 }

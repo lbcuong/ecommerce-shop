@@ -10,7 +10,8 @@ class ItemService
     /**
      * @var $itemRepository
      */
-    protected $itemRepository,
+    protected
+        $itemRepository,
         $path = HelperServiceProvider::ITEM;
 
     /**
@@ -24,13 +25,9 @@ class ItemService
         $this->itemRepository = $itemRepository;
     }
 
-    public function create($request)
+    public function saveRecord($request)
     {
-        // $record = $request->all();
-        // $record['image'] = $this->itemService->handleUploadedImage($request->image);
-        // $record->save();
-// 
-        // return $record;
+        return $this->item->save($request);
     }
 
     public function handleUploadedImage($request)
