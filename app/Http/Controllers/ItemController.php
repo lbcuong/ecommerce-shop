@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ItemRequest;
 use App\Models\Item;
 use App\Models\Category;
-use App\Repositories\ItemRepository;
 use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
@@ -28,7 +27,7 @@ class ItemController extends Controller
 
     public function store(ItemRequest $request)
     {
-        return response()->json(['record' => $this->itemRepository->saveRecord($request), 'success' => true]);
+        return response()->json(['record' => $this->itemService->saveRecord($request), 'success' => true]);
     }
 
     public function destroy($id)
